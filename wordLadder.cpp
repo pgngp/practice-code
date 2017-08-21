@@ -7,6 +7,8 @@ dict = ["hot","dot","dog","lot","log"]
 One shortest transformation is "hit" -> "hot" -> "dot" -> "dog" -> "cog", the program should return its length 5.
 http://www.programcreek.com/2012/12/leetcode-word-ladder/ */
 
+/* Run time: O(n*m) (n: dict size; m: word size); space: O(n) */
+
 #include <iostream>
 #include <unordered_set>
 #include <unordered_map>
