@@ -16,16 +16,21 @@ int getLongestValidSeqLen(string s)
 	char c;
 	
 	for (int i = 0; i < s.length(); ++i) {
-		if (!st.empty()) {
-			maxLen = max(maxLen, len);
-			len = 0;
-		} else if (s[i] == '(') {
+		if (s[i] == '(') {
+			if (!st.empty()) {
+				st.pop();
+				maxLen = max(maxLen, len);
+				len = 0;
+			}
 			st.push(s[i]);
 		} else if (!st.empty()) {
-			c = st.top();
 			st.pop();
 			len += 2;
-		}	
+		} else {
+			maxLen = max(maxLen, len);
+			len = 0;
+		}
+		
 	}
 	maxLen = max(maxLen, len);
 	
