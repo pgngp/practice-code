@@ -18,7 +18,25 @@ using namespace std;
 
 int getMinPathSum(const vector< vector<int> > &t)
 {
+	vector<int> a;
 	
+	int lastRow = t.size() - 1;
+	for (int i = 0; i < t[lastRow].size(); ++i) {
+		a.push_back(t[lastRow][i]);
+		cout << a[i] << " ";
+	}
+	cout << endl;
+	
+	for (int i = t.size() - 2; i >= 0; --i) {
+		for (int j = 0; j < t[i].size(); ++j) {
+			a[j] = t[i][j] + min(a[j], a[j + 1]);
+			cout << a[j] << " ";
+		}
+		cout << endl;
+	}
+	cout << endl;
+	
+	return a[0];
 }
 
 int main(int argc, char **argv)
@@ -45,6 +63,9 @@ int main(int argc, char **argv)
 		cout << endl;
 	}
 	cout << endl;
+	
+	int minSum = getMinPathSum(t);
+	cout << "minSum: " << minSum << endl;
 	
 	return 0;
 }
