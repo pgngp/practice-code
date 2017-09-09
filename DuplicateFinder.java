@@ -3,6 +3,8 @@ Given an array of integers, find out whether there are two distinct indices i an
 such that the difference between nums[i] and nums[j] is at most t and the difference between i and j is at most k.
 http://www.programcreek.com/2014/06/leetcode-contains-duplicate-iii-java/ */
 
+/* Run time: O(nlog(k)) */
+
 import java.util.*;
 
 public class DuplicateFinder {
