@@ -1,6 +1,6 @@
 /* Powerset of a set 
 
-Run time: O(nlg(n))
+Run time: O(n*2^n)
 Space: O(1)
 */
 
