@@ -25,7 +25,7 @@ int removeElement(vector<int> &a, int element)
 		}
 	}
 	
-	return j == -1 ? a.size() : j;
+	return j;
 }
 
 int main(int argc, char **argv)
