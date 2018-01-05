@@ -43,25 +43,15 @@ int main()
 		exit(EXIT_FAILURE);
 	}
 	printf("Client connection accepted...\n");
-
-	// Receive message from client
-	recv(client_socket, &buffer, sizeof(buffer), 0);
-	printf("Client message: %s\n", buffer);
-
-	// Send message
-	strcpy(server_message, "hello");
-	send(client_socket, server_message, sizeof(server_message), 0);
-
-	// Receive 2nd message from client
-	recv(client_socket, &buffer, sizeof(buffer), 0);
-	printf("Client 2nd message: %s\n", buffer);
-
-	// Send 2nd message
-	strcpy(server_message, "world");
-	send(client_socket, server_message, sizeof(server_message), 0);
-
-	// Close socket
-	// close(server_socket);
+	
+	// Receive messages from client and send client messages
+	while (recv(client_socket, &buffer, sizeof(buffer), 0) != 0) {
+		printf("Client request: %s\n", buffer);
+		strcpy(server_message, buffer);
+		strcat(server_message, " back to you");
+		printf("Server response: %s\n", server_message);
+		send(client_socket, server_message, sizeof(server_message), 0);
+	}
 
 	return 0;	
 }

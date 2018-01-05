@@ -6,12 +6,12 @@
 
 int main()
 {
-    char data[100] = {};
-    char buffer[1000] = {};
+		char data[100] = {};
+		char buffer[1000] = {};
 
-    // Create a socket
+		// Create a socket
 		int client_socket;
-    client_socket = socket(AF_INET, SOCK_STREAM, 0);
+		    client_socket = socket(AF_INET, SOCK_STREAM, 0);
 		if (client_socket < 0) {
 			printf("Error creating socket\n");
 		  return -1;
@@ -28,27 +28,17 @@ int main()
 			printf("Error: connection failed\n");
 		  return -1;
 		}
+		
+		char input[100];
+		while (scanf("%s", input) != -1) {
+			// Send request
+			send(client_socket, input, sizeof(input), 0);
+			printf("Sending to server: %s\n", input);
 
-		// Send request
-		strcpy(data, "send me 'hello'");
-		send(client_socket, data, sizeof(data), 0);
-		printf("Sent request...\n");
-
-		// Receive response
-		recv(client_socket, &buffer, sizeof(buffer), 0);
-		printf("Server response: %s\n", buffer);
-
-		// Send 2nd request
-		strcpy(data, "send me 'world'");
-		send(client_socket, data, sizeof(data), 0);
-		printf("Sent 2nd request...\n");
-
-		// Receive 2nd response
-		recv(client_socket, &buffer, sizeof(buffer), 0);
-		printf("Server 2nd response: %s\n", buffer);
-
-		// Close socket
-		// close(client_socket);
+			// Receive response
+			recv(client_socket, &buffer, sizeof(buffer), 0);
+			printf("Received from server: %s\n", buffer);
+		}
 
     return 0;
 }
