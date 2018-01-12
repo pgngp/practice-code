@@ -20,7 +20,7 @@ int main()
 	// Bind the server socket to a file
 	struct sockaddr_un server_address;
 	server_address.sun_family = AF_UNIX;
-	strcpy(server_address.sun_path, "server_socket");
+	strcpy(server_address.sun_path, "server_socket2");
 	if (bind(server_socket, (struct sockaddr *) &server_address, sizeof(server_address)) < 0) {
 		perror("Error: Could not bind server socket.\n");
 		exit(EXIT_FAILURE);
@@ -33,9 +33,10 @@ int main()
 	}
 	
 	// Accept incoming connections, send/receive data
+	int client_socket;
 	while (1) {
 		// Accept incoming connections
-		if (accept(server_socket, NULL, NULL) < 0) {
+		if ((client_socket = accept(server_socket, NULL, NULL)) < 0) {
 			perror("Error: Could not accept incoming request.\n");
 			exit(EXIT_FAILURE);
 		}
@@ -52,7 +53,12 @@ int main()
 			exit(EXIT_FAILURE);
 		}
 		printf("Client message: %s\n", client_message);
+		close(client_socket);
 	}
+	
+	// Close server socket and unlink socket path
+	close(server_socket);
+	unlink("server_socket2");
 	
 	return 0;
 }
