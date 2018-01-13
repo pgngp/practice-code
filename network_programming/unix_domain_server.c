@@ -8,7 +8,6 @@
 int main()
 {
 	char server_message[1024] = "Hello from server!";
-	char client_message[1024];
 	
 	// Create server socket
 	int server_socket = socket(AF_UNIX, SOCK_STREAM, 0);
@@ -31,31 +30,34 @@ int main()
 		perror("Error: Could not listen for new connections.\n");
 		exit(EXIT_FAILURE);
 	}
+	printf("Listening for new connections...\n");
 	
-	// Accept incoming connections, send/receive data
-	int client_socket;
 	while (1) {
+		printf("\n");
+		
 		// Accept incoming connections
+		int client_socket;
 		if ((client_socket = accept(server_socket, NULL, NULL)) < 0) {
 			perror("Error: Could not accept incoming request.\n");
 			exit(EXIT_FAILURE);
 		}
+		printf("Accepted new client connection %d...\n", client_socket);
 		
 		// Send server message to client
-		if (send(server_socket, server_message, sizeof(server_message), 0) < 0) {
+		if (send(client_socket, server_message, strlen(server_message), 0) < 0) {
 			perror("Error: Could not send server message to client.\n");
 			exit(EXIT_FAILURE);
 		}
+		printf("Sent '%s' to client...\n", server_message);
 		
 		// Receive message from client
-		if (recv(server_socket, &client_message, sizeof(client_message), 0) < 0) {
-			perror("Error: Could not receive client message.\n");
-			exit(EXIT_FAILURE);
+		char client_message[1024];
+		while (recv(client_socket, &client_message, sizeof(client_message), 0) != 0) {
+			printf("Received client message: %s\n", client_message);
 		}
-		printf("Client message: %s\n", client_message);
 		close(client_socket);
-	}
-	
+}
+
 	// Close server socket and unlink socket path
 	close(server_socket);
 	unlink("server_socket2");
