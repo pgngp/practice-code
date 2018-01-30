@@ -1,3 +1,11 @@
+/* 
+   Creates readers and writers such that when a writer is writing the buffer, 
+   no reader can read the buffer and no writer can writer the buffer. And when
+   a reader is reading the buffer, another reader can also read, but no writer
+   can write.
+
+   Uses mutex and condition variables to achive the synchronization. 
+*/
 #include <condition_variable>
 #include <mutex>
 #include <thread>
