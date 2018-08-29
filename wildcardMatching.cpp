@@ -1,3 +1,6 @@
+/* Implement wildcard pattern matching with support for '?' and '*'.
+http://www.programcreek.com/2014/06/leetcode-wildcard-matching-java/ */
+
 #include <iostream>
 #include <string>
 #include <vector>
