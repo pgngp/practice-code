@@ -77,6 +77,6 @@ public class Fraction {
                     denominator,
                     getFraction(numerator, denominator)
         ));
-        //System.out.println("java long max: " + Long.MAX_VALUE);
     }
 }
+
