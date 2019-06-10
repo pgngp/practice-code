@@ -9,7 +9,10 @@
  * http://www.programcreek.com/2014/03/leetcode-fraction-to-recurring-decimal-java/
  */
 
-import java.lang.StringBuilder;
+/**
+ * time: O(n) where n is number of digits in fraction
+ * space: O(n) where n is number of digits in fraction
+ */
 
 public class Fraction {
     public static String convertIntToString(int num) {
