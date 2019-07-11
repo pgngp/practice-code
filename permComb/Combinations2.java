@@ -15,7 +15,7 @@
 
 /**
  * time: O(n choose k)
- * space: O(1)
+ * space: O(k)
  */
 
 import java.util.ArrayList;
