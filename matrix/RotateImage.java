@@ -7,6 +7,11 @@
  * http://www.programcreek.com/2013/01/leetcode-rotate-image-java/
  */
 
+/**
+ * time: O(n * n)
+ * space: O(1)
+ */
+
 public class RotateImage {
     public void rotate(int[][] matrix) {
         if (matrix == null || matrix.length == 0 || matrix[0].length == 0) {
