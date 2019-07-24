@@ -16,6 +16,11 @@
  * http://www.programcreek.com/2014/04/leetcode-number-of-islands-java/
  */
 
+/**
+ * time: O((m^2) * (n^2))
+ * space: O(m * n)
+ */
+
 public class NumberOfIslands {
     public int numIslands(char[][] grid) {
         if (grid == null || grid.length == 0 || grid[0].length == 0) {
