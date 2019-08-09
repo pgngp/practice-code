@@ -14,6 +14,11 @@
  * http://www.programcreek.com/2014/06/leetcode-word-search-java/
  */
 
+/**
+ * time: O((mn)^2)
+ * space: O(mn)
+ */
+
 public class WordSearch {
     public boolean exist(char[][] board, String word) {
         if (board == null || board.length == 0 || board[0].length == 0 || word == null) {
