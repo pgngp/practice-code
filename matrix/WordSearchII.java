@@ -13,6 +13,11 @@
  * http://www.programcreek.com/2014/06/leetcode-word-search-ii-java/
  */
 
+/**
+ * time: O(k*(mn)^2) where k is number of words, m is num rows in matrix, n is num cols
+ * space: O(1)
+ */
+
 import java.util.ArrayList;
 import java.util.List;
 
