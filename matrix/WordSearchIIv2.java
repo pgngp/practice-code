@@ -13,6 +13,11 @@
  * http://www.programcreek.com/2014/06/leetcode-word-search-ii-java/
  */
 
+/**
+ * time: O((m * n * avg length of words)
+ * space: O(num words * avg length of word)
+ */
+
 import java.util.Arrays;
 import java.util.ArrayList;
 import java.util.List;
