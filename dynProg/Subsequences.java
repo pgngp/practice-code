@@ -8,6 +8,11 @@
  * http://www.programcreek.com/2013/01/leetcode-distinct-subsequences-total-java/
  */
 
+/*
+ * time: O(mn)
+ * space: O(n)
+ */
+
 public class Subsequences {
     public int numDistinct(String s, String t) {
         if (s == null || t == null) {
