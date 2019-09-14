@@ -5,6 +5,11 @@
  * http://www.programcreek.com/2014/03/leetcode-maximum-product-subarray-java/
  */
 
+/*
+ * time: O(n)
+ * space: O(1)
+ */
+
 public class MaxProdSub {
     public int maxProduct(int[] nums) {
         int max = nums[0];
