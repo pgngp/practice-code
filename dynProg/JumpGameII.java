@@ -14,25 +14,22 @@ public class JumpGameII {
             return 1;
         }
 
-        int max = nums[0];
         int maxIdx = 0;
         int start = 0;
-        int end = start + max;
+        int end = start + nums[0];
         int count = 1;
         while (end < nums.length) {
             ++count;
-            max = start + 1 + nums[start + 1];
             maxIdx = start + 1;
             for (int i = start + 1; i <= end; ++i) {
                 if (i + nums[i] >= nums.length - 1) {
                     return count;
-                } else if (max <= i + nums[i]) {
-                    max = i + nums[i];
+                } else if (maxIdx + nums[maxIdx] <= i + nums[i]) {
                     maxIdx = i;
                 }
             }
             start = end;
-            end = max;
+            end = maxIdx + nums[maxIdx];
         }
 
         return count;
