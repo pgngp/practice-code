@@ -6,6 +6,11 @@
  * http://www.programcreek.com/2014/06/leetcode-jump-game-ii-java/
  */
 
+/*
+ * time: O(n)
+ * space: O(1)
+ */
+
 public class JumpGameII {
     public int jump(int[] nums) {
         if (nums.length == 1) {
