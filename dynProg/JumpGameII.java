@@ -10,36 +10,37 @@ public class JumpGameII {
     public int jump(int[] nums) {
         if (nums.length == 1) {
             return 0;
+        } else if (nums[0] >= nums.length - 1) {
+            return 1;
         }
 
-        int[] cache = new int[nums.length];
-        int result = dfs(nums, cache, 0);
-
-        return result;
-    }
-
-    private int dfs(int[] nums, int[] cache, int idx) {
-        if (idx == nums.length - 1) {
-            return 0;
-        } else if (cache[idx] > 0) {
-            return cache[idx];
-        }
-
-        int min = nums.length - idx - 1;;
-        for (int i = nums[idx]; i > 0; --i) {
-            if (idx + i >= nums.length) {
-                continue;
+        int max = nums[0];
+        int maxIdx = 0;
+        int start = 0;
+        int end = start + max;
+        int count = 1;
+        while (end < nums.length) {
+            ++count;
+            max = start + 1 + nums[start + 1];
+            maxIdx = start + 1;
+            for (int i = start + 1; i <= end; ++i) {
+                if (i + nums[i] >= nums.length - 1) {
+                    return count;
+                } else if (max <= i + nums[i]) {
+                    max = i + nums[i];
+                    maxIdx = i;
+                }
             }
-            min = Integer.min(min, 1 + dfs(nums, cache, idx + i));
+            start = end;
+            end = max;
         }
-        cache[idx] = min;
 
-        return min;
+        return count;
     }
 
     private void printArr(int[] nums) {
         System.out.print("[ ");
-        for (int i = 0; i < n; ++i) {
+        for (int i = 0; i < nums.length; ++i) {
             System.out.print(nums[i] + " ");
         }
         System.out.println("]");
