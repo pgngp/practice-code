@@ -4,43 +4,32 @@
  * http://www.programcreek.com/2014/03/leetcode-jump-game-java/
  */
 
+/*
+ * time: O(n)
+ * space: O(1)
+ */
+
 public class JumpGame {
     public boolean canJump(int[] nums) {
         if (nums == null) {
             return false;
-        }       
+        } else if (nums.length == 1) {
+            return true;
+        }      
 
-        nums[nums.length - 1] = -1;
-        boolean result = dfs(nums, 0);
-        printArr(nums);
+        int max = nums[0];
+        for (int i = 0; i < nums.length; ++i) {
+            if (max <= i && nums[i] == 0) {
+                return false;
+            }
 
-        return result;
-    }
-
-    private boolean dfs(int[] nums, int idx) {
-        if (idx >= nums.length) {
-            return false;
-        } else if (nums[idx] < 0) {
-            return nums[idx] == -1;
-        }
-
-        for (int i = nums[idx]; i > 0; --i) {
-            if (dfs(nums, idx + i)) {
-                nums[idx] = -1;
+            max = Math.max(max, i + nums[i]);
+            if (max >= nums.length - 1) {
                 return true;
             }
         }
-        nums[idx] = -2;
-            
-        return false;
-    }
 
-    private void printArr(int[] nums) {
-        System.out.print("[ ");
-        for (int i = 0; i < nums.length; ++i) {
-            System.out.print(nums[i] + " ");
-        }
-        System.out.println("]");
+        return true;
     }
 
     public static void main(String[] args) {
