@@ -15,6 +15,11 @@
  * http://www.programcreek.com/2014/02/leetcode-best-time-to-buy-and-sell-stock-java/
  */
 
+/*
+ * time: O(n)
+ * space: O(1)
+ */
+
 public class Stock {
     public int maxProfit(int[] prices) {
         int max = 0;
