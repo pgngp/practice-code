@@ -24,25 +24,39 @@
 
 public class DecodeWays {
     public int numDecodings(String s) {
+        int slen = s.length();
         int[] cache = new int[s.length()];
-        for (int i = 0; i < s.length(); ++i) {
-            cache[i] = -1;
+
+        // last digit
+        if (s.charAt(slen - 1) == '0') {
+            cache[slen - 1] = 0;
+        } else {
+            cache[slen - 1] = 1;
         }
 
-        return helper(s, 0, 1, cache) + helper(s, 0, 2, cache);
-    }
-
-    private int helper(String s, int pos, int numDigits, int[] cache) {
-        int end = pos + numDigits;
-        if (s.charAt(pos) == '0' || end > s.length() || Integer.parseInt(s.substring(pos, end)) > 26) {
-            return 0;
-        } else if (end == s.length()) {
-            return 1;
-        } else if (cache[end] == -1) {
-            cache[end] = helper(s, end, 1, cache) + helper(s, end, 2, cache);
+        // second-last digit
+        if (slen - 2 < 0) {
+            return cache[0];
+        } else if (s.charAt(slen - 2) == '0') {
+            cache[slen - 2] = 0;
+        } else if (Integer.parseInt(s.substring(slen - 2, slen)) <= 26) {
+            cache[slen - 2] = 1 + cache[slen - 1];
+        } else {
+            cache[slen - 2] = cache[slen - 1];
         }
 
-        return cache[end];
+        // remaining
+        for (int i = slen - 3; i >= 0; --i) {
+            if (s.charAt(i) == '0') {
+                cache[i] = 0;
+            } else if (Integer.parseInt(s.substring(i, i + 2)) <= 26) {
+                cache[i] = cache[i + 1] + cache[i + 2];
+            } else {
+                cache[i] = cache[i + 1];
+            }
+        }
+
+        return cache[0];
     }
 
     private void printArr(int[] m) {
