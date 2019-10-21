@@ -10,6 +10,11 @@
  * http://www.programcreek.com/2015/03/rotate-array-in-java/
  */
 
+/*
+ * time: O(n)
+ * space: O(1)
+ */
+
 public class RotateArray {
     public void rotate(int[] nums, int k) {
         int count = 0;
