@@ -27,19 +27,16 @@ public class WordLadderIIv2 {
         if (!set.contains(endWord)) {
             return result;
         }
-        set.remove(endWord);
-        set.add(beginWord);
+        set.remove(beginWord);
 
         List<String> currList = new ArrayList<>();
-        currList.add(endWord);
-        dfs(beginWord, endWord, endWord, set, result, currList);
-        System.out.println("before: " + result);
+        currList.add(beginWord);
+        dfs(endWord, beginWord, set, result, currList);
         
         int min = Integer.MAX_VALUE;
         for (int i = 0; i < result.size(); ++i) {
             min = Math.min(min, result.get(i).size());
         }
-        System.out.println("####### min: " + min);
         Iterator<List<String>> iter = result.iterator();
         while (iter.hasNext()) {
             if (iter.next().size() > min) {
@@ -50,8 +47,8 @@ public class WordLadderIIv2 {
         return result;
     }
 
-    private void dfs(String beginWord, String endWord, String currWord, Set<String> set, List<List<String>> result, List<String> currList) {
-        if (currWord.equals(beginWord)) {
+    private void dfs(String endWord, String currWord, Set<String> set, List<List<String>> result, List<String> currList) {
+        if (currWord.equals(endWord)) {
             result.add(new ArrayList<String>(currList));
             return;
         }
@@ -70,7 +67,7 @@ public class WordLadderIIv2 {
                 }
                 set.remove(newWord);
                 currList.add(newWord);
-                dfs(beginWord, endWord, newWord, set, result, currList);
+                dfs(endWord, newWord, set, result, currList);
                 currList.remove(newWord);
                 set.add(newWord);
             }
