@@ -27,11 +27,12 @@ public class WordLadderIIv2 {
         if (!set.contains(endWord)) {
             return result;
         }
-        set.remove(beginWord);
+        set.remove(endWord);
+        set.add(beginWord);
 
         List<String> currList = new ArrayList<>();
-        currList.add(beginWord);
-        dfs(endWord, beginWord, set, result, currList);
+        currList.add(endWord);
+        dfs(beginWord, endWord, set, result, currList);
         
         int min = Integer.MAX_VALUE;
         for (int i = 0; i < result.size(); ++i) {
@@ -47,9 +48,13 @@ public class WordLadderIIv2 {
         return result;
     }
 
-    private void dfs(String endWord, String currWord, Set<String> set, List<List<String>> result, List<String> currList) {
-        if (currWord.equals(endWord)) {
-            result.add(new ArrayList<String>(currList));
+    private void dfs(String beginWord, String currWord, Set<String> set, List<List<String>> result, List<String> currList) {
+        if (currWord.equals(beginWord)) {
+            List<String> newList = new ArrayList<>();
+            for (int i = currList.size() - 1; i >= 0; --i) {
+                newList.add(currList.get(i));
+            }
+            result.add(newList);
             return;
         }
 
@@ -67,7 +72,7 @@ public class WordLadderIIv2 {
                 }
                 set.remove(newWord);
                 currList.add(newWord);
-                dfs(endWord, newWord, set, result, currList);
+                dfs(beginWord, newWord, set, result, currList);
                 currList.remove(newWord);
                 set.add(newWord);
             }
