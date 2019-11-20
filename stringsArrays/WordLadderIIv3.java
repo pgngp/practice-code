@@ -17,13 +17,16 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.HashMap;
 
+/*
+ * time: O(n^2*m), where n is size of word list and m is size of each word
+ * space: O(n*m)
+ */
+
 public class WordLadderIIv3 {
     public List<List<String>> findLadders(String beginWord, String endWord, List<String> wordList) {
         List<List<String>> result = new ArrayList<>();
         Set<String> notVisited = new HashSet<>();
-        for (String w : wordList) {
-            notVisited.add(w);
-        }
+        notVisited.addAll(wordList);
         if (!notVisited.contains(endWord)) {
             return result;
         }
@@ -31,87 +34,63 @@ public class WordLadderIIv3 {
         notVisited.remove(endWord);
 
         Map<String, Set<String>> map = new HashMap<>();
-        int min = helper(beginWord, endWord, notVisited, map);
-        System.out.println("map: " + map);
+        helper(beginWord, endWord, notVisited, map);
 
         List<String> list = new ArrayList<>();
         list.add(beginWord);
-        createResult(beginWord, endWord, map, result, list, min);
+        createResult(beginWord, endWord, map, result, list);
 
         return result;
     }
 
-    private int helper(String beginWord, String endWord, Set<String> notVisited, Map<String, Set<String>> map) {
+    private void helper(String beginWord, String endWord, Set<String> notVisited, Map<String, Set<String>> map) {
         List<String> visited = new ArrayList<>();
         visited.add(beginWord);
-        int start = 0;
-        int end = 1;
-        int min = Integer.MAX_VALUE;
-        int steps = 1;
-        List<String> tmpNotVisited = new ArrayList<>();
-        while (start < end) {
-            ++steps;
-            if (steps > min) {
-                break;
-            }
-            for (int i = start; i < end; ++i) {
+        boolean endWordReached = false;
+        while (visited.size() > 0) {
+            List<String> newVisited = new ArrayList<>();
+            for (int i = 0; i < visited.size(); ++i) {
                 String word = visited.get(i);
-                if (word.equals(endWord)) {
-                    continue;
-                }
-                if (!map.containsKey(word)) {
-                    map.put(word, new HashSet<String>());
-                }
+                Set<String> nextSet = new HashSet<String>();
+                map.put(word, nextSet);
                 char[] arr = word.toCharArray();
-                boolean isEndWord = false;
                 for (int pos = 0; pos < arr.length; ++pos) {
                     char orig = arr[pos];
                     for (char c = 'a'; c <= 'z'; ++c) {
-                        if (c == orig) {
-                            continue;
-                        }
                         arr[pos] = c;
                         String newWord = new String(arr);
-                        isEndWord = newWord.equals(endWord);
-                        if (isEndWord) {
-                            min = Math.min(min, steps);
-                        } else if (!notVisited.contains(newWord)) {
-                            continue;
+                        if (newWord.equals(endWord)) {
+                            endWordReached = true;
+                            nextSet.add(newWord);
+                            break;
+                        } else if (notVisited.contains(newWord)) {
+                            newVisited.add(newWord);
+                            nextSet.add(newWord);
                         }
-                        visited.add(newWord);
-                        tmpNotVisited.add(newWord);
-                        map.get(word).add(newWord);
-                    }
-                    if (isEndWord) {
-                        break;
                     }
                     arr[pos] = orig;
                 }
             }
-            start = end;
-            end = visited.size();
-
-            for (String w : tmpNotVisited) {
-                notVisited.remove(w);
+            if (endWordReached) {
+                break;
             }
-            tmpNotVisited.clear();
+            notVisited.removeAll(newVisited);
+            visited = newVisited;
         }
-        
-        return min;
     }
 
-    private void createResult(String word, String endWord, Map<String, Set<String>> map, List<List<String>> result, List<String> list, int min) {
-        if (!map.containsKey(word) || map.get(word).size() == 0) {
-            if (word.equals(endWord) && list.size() == min) {
-                result.add(new ArrayList<String>(list));
-            }
+    private void createResult(String word, String endWord, Map<String, Set<String>> map, List<List<String>> result, List<String> list) {
+        if (word.equals(endWord)) {
+            result.add(new ArrayList<String>(list));
+            return;
+        } else if (!map.containsKey(word)) {
             return;
         }
 
         Set<String> nextSet = map.get(word);
         for (String w : nextSet) {
             list.add(w);
-            createResult(w, endWord, map, result, list, min);
+            createResult(w, endWord, map, result, list);
             list.remove(w);
         }
     }
@@ -129,7 +108,6 @@ public class WordLadderIIv3 {
         for (int i = 0; i < n; ++i) {
             dict.add(args[i + 3]);
         }
-        //System.out.println("dict: " + dict.toString());
 
         WordLadderIIv3 wl = new WordLadderIIv3();
         List<List<String>> result = wl.findLadders(begin, end, dict);
