@@ -4,6 +4,11 @@
  * http://www.programcreek.com/2012/12/leetcode-median-of-two-sorted-arrays-java/
  */
 
+/*
+ * time: O(log(min(m, n)))
+ * space: O(1)
+ */
+
 import java.util.Arrays;
 
 public class Median {
