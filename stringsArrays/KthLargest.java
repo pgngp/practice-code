@@ -42,19 +42,26 @@ public class KthLargest {
 
         // add num to heap
         void add(int num) {
-            if (size == 0) {
-                arr[0] = num;
-                ++size;
-            } else if (size == maxSize) {
+            if (size == maxSize) {
                 if (num <= arr[0]) {
                     return;
-                } else {
-                    removeMin();
-                    arr[size] = num;
-                    ++size;
-                    upHeap();
                 }
-            } else {
+                removeMin();
+            }
+            arr[size] = num;
+            ++size;
+            upHeap();
+        }
+
+        // add all nums to heap
+        void addAll(int[] nums) {
+            for (int num : nums) {
+                if (size == maxSize) {
+                    if (num <= arr[0]) {
+                        continue;
+                    }
+                    removeMin();
+                }
                 arr[size] = num;
                 ++size;
                 upHeap();
@@ -114,17 +121,8 @@ public class KthLargest {
     }
 
     public int findKthLargest(int[] nums, int k) {
-        //LinkedList<Integer> ll = new LinkedList<>();
         MinHeap heap = new MinHeap(k);
-        System.out.println("begin: " + heap.toStr());
-
-        System.out.println("ll:");
-        for (Integer num : nums) {
-            //addToList(ll, num, k);
-            heap.add(num);
-            System.out.println(num + ": " + heap.toStr());
-        }
-
+        heap.addAll(nums);
         return heap.peekMin();
     }
 
