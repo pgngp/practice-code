@@ -18,9 +18,6 @@ public class KthLargest {
         // constructor
         MinHeap(int size) {
             arr = new int[size];
-            for (int i = 0; i < size; ++i) {
-                arr[i] = Integer.MAX_VALUE;
-            }
             maxSize = size;
             this.size = 0;
         }
@@ -40,19 +37,6 @@ public class KthLargest {
             return min;
         }
 
-        // add num to heap
-        void add(int num) {
-            if (size == maxSize) {
-                if (num <= arr[0]) {
-                    return;
-                }
-                removeMin();
-            }
-            arr[size] = num;
-            ++size;
-            upHeap();
-        }
-
         // add all nums to heap
         void addAll(int[] nums) {
             for (int num : nums) {
@@ -68,6 +52,13 @@ public class KthLargest {
             }
         }
 
+        // swap
+        void swap(int x, int y) {
+            int tmp = arr[x];
+            arr[x] = arr[y];
+            arr[y] = tmp;
+        }
+
         // Up heap
         void upHeap() {
             int idx = size - 1;
@@ -76,9 +67,7 @@ public class KthLargest {
                 if (arr[parent] <= arr[idx]) {
                     return;
                 }
-                int tmp = arr[parent];
-                arr[parent] = arr[idx];
-                arr[idx] = tmp;
+                swap(parent, idx);
                 idx = parent;
                 parent = (int) Math.floor((idx - 1) / 2);
             }
@@ -93,30 +82,19 @@ public class KthLargest {
                 if (arr[idx] <= arr[left] && arr[idx] <= arr[right]) {
                     return;
                 } else if (arr[left] <= arr[right]) {
-                    int tmp = arr[idx];
-                    arr[idx] = arr[left];
-                    arr[left] = tmp;
+                    swap(idx, left);
                     idx = left;
                 } else {
-                    int tmp = arr[idx];
-                    arr[idx] = arr[right];
-                    arr[right] = tmp;
+                    swap(idx, right);
                     idx = right;
                 }
                 left = (2 * idx) + 1;
-                right = (2 * idx) + 2;
+                right = left + 1;
             }
 
             if (left < size && arr[left] < arr[idx]) {
-                int tmp = arr[idx];
-                arr[idx] = arr[left];
-                arr[left] = tmp;
+                swap(idx, left);
             }
-        }
-
-        // To string
-        String toStr() {
-            return Arrays.toString(arr);
         }
     }
 
@@ -124,34 +102,6 @@ public class KthLargest {
         MinHeap heap = new MinHeap(k);
         heap.addAll(nums);
         return heap.peekMin();
-    }
-
-    private void addToList(LinkedList<Integer> ll, int num, int k) {
-        if (ll.size() == 0) {
-            ll.add(num);
-            return;
-        } else if (ll.size() == k && num < ll.peek()) {
-            return;
-        }
-
-        if (ll.size() < k) {
-            for (int i = 0; i < ll.size(); ++i) {
-                if (num <= ll.get(i)) {
-                    ll.add(i, num);
-                    return;
-                }
-            }
-            ll.add(num);
-        } else {
-            ll.pop();
-            for (int i = 0; i < ll.size(); ++i) {
-                if (num <= ll.get(i)) {
-                    ll.add(i, num);
-                    return;
-                }
-            }
-            ll.add(num);
-        }
     }
 
     public static void main(String[] args) {
