@@ -6,10 +6,67 @@
  * http://www.programcreek.com/2014/05/leetcode-kth-largest-element-in-an-array-java/
  */
 
+/*
+ * time: O(n*log(n))
+ * space: O(1)
+ */
+
 import java.util.Arrays;
 import java.util.LinkedList;
 
 public class KthLargest {
+    public int findKthLargest(int[] nums, int k) {
+        quickSelect(nums, 0, nums.length - 1, k);
+        return nums[nums.length - k];
+    }
+
+    void quickSelect(int[] nums, int start, int end, int k) {
+        int mid = (start + end) / 2;
+        int pivot = nums[mid];
+        swap(nums, mid, end);
+
+        int i = start;
+        int j = start;
+        for (; i < end; ++i) {
+            if (j <= i && nums[i] < pivot) {
+                ++j;
+                continue;
+            }
+
+            while (j < end && nums[j] >= pivot) {
+                ++j;
+            }
+
+            if (nums[j] < pivot) {
+                swap(nums, i, j);
+                ++j;
+
+                if (j == end) {
+                    ++i;
+                }
+            }
+
+            if (j == end) {
+                swap(nums, i, j);
+                break;
+            }
+        }
+
+        if (nums.length - k == i) {
+            return;
+        } else if (nums.length - k < i) {
+            quickSelect(nums, start, i - 1, k);
+        } else {
+            quickSelect(nums, i + 1, end, k);
+        }
+    }
+
+    void swap(int[] nums, int x, int y) {
+        int tmp = nums[x];
+        nums[x] = nums[y];
+        nums[y] = tmp;
+    }
+
     class MinHeap {
         int maxSize;
         int size;
@@ -98,7 +155,7 @@ public class KthLargest {
         }
     }
 
-    public int findKthLargest(int[] nums, int k) {
+    public int findKthLargest2(int[] nums, int k) {
         MinHeap heap = new MinHeap(k);
         heap.addAll(nums);
         return heap.peekMin();
