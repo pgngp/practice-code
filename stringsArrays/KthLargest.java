@@ -27,8 +27,9 @@ public class KthLargest {
 
         int i = start;
         int j = start;
-        for (; i < end; ++i) {
+        while (j < end) {
             if (j <= i && nums[i] < pivot) {
+                ++i;
                 ++j;
                 continue;
             }
@@ -39,18 +40,11 @@ public class KthLargest {
 
             if (nums[j] < pivot) {
                 swap(nums, i, j);
+                ++i;
                 ++j;
-
-                if (j == end) {
-                    ++i;
-                }
-            }
-
-            if (j == end) {
-                swap(nums, i, j);
-                break;
             }
         }
+        swap(nums, i, j);
 
         if (nums.length - k == i) {
             return;
