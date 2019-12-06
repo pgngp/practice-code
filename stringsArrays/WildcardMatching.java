@@ -26,19 +26,20 @@
  * Output: false
  */
 
+import java.util.Arrays;
+
 public class WildcardMatching {
     public boolean isMatch(String s, String p) {
         int sl = s.length();
         int pl = p.length();
+
+        // create table
         boolean[][] m = new boolean[pl + 1][sl + 1];
         m[0][0] = true;
-
+        
         // first col
         for (int i = 1; i < m.length; ++i) {
-            char x = p.charAt(i - 1);
-            if ((x >= 'a' && x <= 'z') || x == '?') {
-                m[i][0] = false;
-            } else { // x = '*'
+            if (p.charAt(i - 1) == '*') {
                 m[i][0] = m[i - 1][0];
             }
         }
