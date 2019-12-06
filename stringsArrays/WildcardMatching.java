@@ -26,27 +26,30 @@
  * Output: false
  */
 
+/*
+ * time: O(mn)
+ * space: O(s)
+ */
+
 import java.util.Arrays;
 
 public class WildcardMatching {
     public boolean isMatch(String s, String p) {
-        int pl = p.length();
         int sl = s.length();
         boolean[] m = new boolean[sl + 1];
         m[0] = true;
 
-        for (int row = 1; row <= pl; ++row) {
+        for (int row = 1; row <= p.length(); ++row) {
             char x = p.charAt(row - 1);
-            boolean isAlpha = (x >= 'a' && x <= 'z');
             boolean left = (x == '*' && m[0]);
             for (int col = 1; col <= sl; ++col) {
                 boolean curr = false;
-                if (isAlpha) {
-                    curr = (x == s.charAt(col - 1) && m[col - 1]);
+                if (x == '*') {
+                    curr = left || m[col];
                 } else if (x == '?') {
                     curr = m[col - 1];
-                } else { // x = '*'
-                    curr = left || m[col];
+                } else {
+                    curr = (x == s.charAt(col - 1) && m[col - 1]);
                 }
                 m[col - 1] = left;
                 left = curr;
