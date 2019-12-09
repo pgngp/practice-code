@@ -5,6 +5,11 @@
  * http://www.programcreek.com/2012/12/leetcode-merge-intervals/
  */
 
+/*
+ * time: O(nlogn)
+ * space: O(n)
+ */
+
 import java.util.Arrays;
 import java.util.List;
 import java.util.LinkedList;
