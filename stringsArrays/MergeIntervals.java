@@ -12,6 +12,30 @@ import java.util.ArrayList;
 
 public class MergeIntervals {
     public int[][] merge(int[][] intervals) {
+        if (intervals.length <= 1) {
+            return intervals;
+        }
+
+        // sort the intervals
+        Arrays.sort(intervals, (arr1, arr2) -> Integer.compare(arr1[0], arr2[0]));
+        
+        // merge the intervals
+        int[] curr = intervals[0];
+        List<int[]> result = new ArrayList<>();
+        result.add(curr);
+        for (int i = 1; i < intervals.length; ++i) {
+            if (curr[1] < intervals[i][0]) {
+                curr = intervals[i];
+                result.add(curr);
+            } else {
+                curr[1] = Integer.max(curr[1], intervals[i][1]);
+            }
+        }
+
+        return result.toArray(new int[result.size()][]);
+    }
+
+    public int[][] merge2(int[][] intervals) {
         if (intervals == null || intervals.length == 0) {
             return intervals;
         }
