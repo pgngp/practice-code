@@ -8,6 +8,11 @@
  * http://www.programcreek.com/2012/12/leetcode-solution-of-two-sum-in-java/
  */
 
+/*
+ * time: O(n)
+ * space: O(n)
+ */
+
 import java.util.Arrays;
 import java.util.Map;
 import java.util.HashMap;
