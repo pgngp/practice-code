@@ -14,34 +14,43 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.ArrayList;
 
+/*
+ * time: O(n^2)
+ * space: O(1)
+ */
+
 public class ThreeSum {
     public List<List<Integer>> threeSum(int[] nums) {
         int n = nums.length;
         Arrays.sort(nums);
         List<List<Integer>> result = new ArrayList<>();
+        int prev = Integer.MAX_VALUE;
         for (int i = 0; i < n - 2; ++i) {
-            if (i > 0 && nums[i - 1] == nums[i]) {
+            if (prev == nums[i]) {
                 continue;
             }
 
+            int prevLeft = Integer.MAX_VALUE;
             int left = i + 1;
             int right = n - 1;
             while (left < right) {
                 int sum = nums[i] + nums[left] + nums[right];
-                if (sum < 0 || (i < left - 1 && nums[left - 1] == nums[left])) {
-                    ++left;
-                } else if (sum > 0) {
+                if (sum > 0) {
                     --right;
+                } else if (sum < 0 || prevLeft == nums[left]) {
+                    ++left;
                 } else {
                     List<Integer> list = new ArrayList<>();
                     list.add(nums[i]);
                     list.add(nums[left]);
                     list.add(nums[right]);
                     result.add(list);
+                    prevLeft = nums[left];
                     ++left;
                     --right;
                 }
             }
+            prev = nums[i];
         }
 
         return result;
