@@ -15,6 +15,11 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.ArrayList;
 
+/*
+ * time: O(n^3)
+ * space: O(1)
+ */
+
 public class FourSum {
     public List<List<Integer>> fourSum(int[] nums, int target) {
         Arrays.sort(nums);
@@ -27,6 +32,7 @@ public class FourSum {
             }
 
             int prevJ = Integer.MAX_VALUE;
+            int tmp1 = target - nums[i];
             for (int j = i + 1; j < nums.length - 2; ++j) {
                 if (prevJ == nums[j]) {
                     continue;
@@ -35,12 +41,12 @@ public class FourSum {
                 int prevLeft = Integer.MAX_VALUE;
                 int left = j + 1;
                 int right = nums.length - 1;
-                int tmpSum = nums[i] + nums[j];
+                int tmp2 = tmp1 - nums[j];
                 while (left < right) {
-                    int sum = tmpSum + nums[left] + nums[right];
-                    if (sum > target) {
+                    int sum = nums[left] + nums[right];
+                    if (tmp2 < sum) {
                         --right;
-                    } else if (sum < target || prevLeft == nums[left]) {
+                    } else if (tmp2 > sum || prevLeft == nums[left]) {
                         ++left;
                     } else {
                         List<Integer> list = new ArrayList<>();
