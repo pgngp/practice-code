@@ -21,18 +21,17 @@ import java.util.ArrayList;
 
 public class ThreeSum {
     public List<List<Integer>> threeSum(int[] nums) {
-        int n = nums.length;
         Arrays.sort(nums);
         List<List<Integer>> result = new ArrayList<>();
         int prev = Integer.MAX_VALUE;
-        for (int i = 0; i < n - 2; ++i) {
+        for (int i = 0; i < nums.length - 2; ++i) {
             if (prev == nums[i]) {
                 continue;
             }
 
             int prevLeft = Integer.MAX_VALUE;
             int left = i + 1;
-            int right = n - 1;
+            int right = nums.length - 1;
             while (left < right) {
                 int sum = nums[i] + nums[left] + nums[right];
                 if (sum > 0) {
