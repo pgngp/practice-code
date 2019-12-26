@@ -11,23 +11,24 @@ import java.util.LinkedList;
 
 public class LongestValidParen {
     public int longestValidParentheses(String s) {
-        if (s.length() < 2) {
+        int n = s.length();
+        if (n < 2) {
             return 0;
         }
 
         Deque<Integer> stack = new LinkedList<>();
         int max = 0;
-        int[] cache = new int[s.length()];
-        for (int i = 0; i < s.length(); ++i) {
+        int[] cache = new int[n];
+        for (int i = 0; i < n; ++i) {
             if (s.charAt(i) == '(') {
                 stack.push(i);
             } else if (stack.size() > 0) {
+                int currLen = 0;
                 int currSeqStart = stack.pop();
-                int prevLen = 0;
-                if (currSeqStart > 0 && s.charAt(currSeqStart - 1) == ')') {
-                    prevLen = cache[currSeqStart - 1];
+                if (currSeqStart > 0) {
+                    currLen = cache[currSeqStart - 1];
                 }
-                int currLen = prevLen + i - currSeqStart + 1;
+                currLen += i - currSeqStart + 1;
                 max = Math.max(max, currLen);
                 cache[i] = currLen;
             }
