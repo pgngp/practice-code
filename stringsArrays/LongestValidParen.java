@@ -7,19 +7,18 @@
  */
 
 import java.util.Deque;
-import java.util.LinkedList;
+import java.util.ArrayDeque;
 
 public class LongestValidParen {
     public int longestValidParentheses(String s) {
-        int n = s.length();
-        if (n < 2) {
+        if (s.length() < 2) {
             return 0;
         }
 
-        Deque<Integer> stack = new LinkedList<>();
+        Deque<Integer> stack = new ArrayDeque<>();
         int max = 0;
-        int[] cache = new int[n];
-        for (int i = 0; i < n; ++i) {
+        int[] cache = new int[s.length()];
+        for (int i = 0; i < s.length(); ++i) {
             if (s.charAt(i) == '(') {
                 stack.push(i);
             } else if (stack.size() > 0) {
