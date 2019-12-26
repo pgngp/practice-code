@@ -23,12 +23,9 @@ public class LongestValidParen {
             if (s.charAt(i) == '(') {
                 stack.push(i);
             } else if (stack.size() > 0) {
-                int currLen = 0;
                 int currSeqStart = stack.pop();
-                if (currSeqStart > 0) {
-                    currLen = cache[currSeqStart - 1];
-                }
-                currLen += i - currSeqStart + 1;
+                int prevLen = (currSeqStart > 0) ? cache[currSeqStart - 1] : 0;
+                int currLen = prevLen + i - currSeqStart + 1;
                 max = Math.max(max, currLen);
                 cache[i] = currLen;
             }
