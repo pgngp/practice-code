@@ -4,6 +4,11 @@
  * http://www.programcreek.com/2012/12/leetcode-implement-strstr-java/
  */
 
+/*
+ * time: O(m + n)
+ * space: O(n)
+ */
+
 import java.util.Arrays;
 
 public class StrStr {
