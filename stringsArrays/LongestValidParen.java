@@ -6,6 +6,11 @@
  * http://www.programcreek.com/2014/06/leetcode-longest-valid-parentheses-java/
  */
 
+/*
+ * time: O(n)
+ * space: O(n)
+ */
+
 import java.util.Deque;
 import java.util.ArrayDeque;
 
