@@ -9,9 +9,50 @@
 import java.util.Arrays;
 import java.util.Set;
 import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.HashMap;
 
 public class LongestConsecSeq {
     public int longestConsecutive(int[] nums) {
+        if (nums.length == 0) {
+            return 0;
+        }
+
+        Map<Integer, Boolean> map = new HashMap<>();
+        for (int i = 0; i < nums.length; ++i) {
+            map.put(nums[i], true);
+        }
+
+        Iterator<Integer> iter = map.keySet().iterator();
+        int max = Integer.MIN_VALUE;
+        while (iter.hasNext()) {
+            int num = iter.next();
+            if (map.get(num) == false) {
+                continue;
+            }
+            map.put(num, false);
+            int tmp = num - 1;
+            int count = 1;
+            while (map.containsKey(tmp) && map.get(tmp) == true) {
+                map.put(tmp, false);
+                ++count;
+                --tmp;
+            }
+
+            tmp = num + 1;
+            while (map.containsKey(tmp) && map.get(tmp) == true) {
+                map.put(num, false);
+                ++count;
+                ++tmp;
+            }
+            max = Math.max(max, count);
+        }
+
+        return max;
+    }
+
+    public int longestConsecutive2(int[] nums) {
         if (nums.length == 0) {
             return 0;
         }
