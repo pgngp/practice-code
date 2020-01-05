@@ -6,6 +6,11 @@
  * http://www.programcreek.com/2013/01/leetcode-longest-consecutive-sequence-java/
  */
 
+/*
+ * time: O(n)
+ * space: O(n)
+ */
+
 import java.util.Arrays;
 import java.util.Set;
 import java.util.HashSet;
