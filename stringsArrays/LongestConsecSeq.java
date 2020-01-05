@@ -15,37 +15,34 @@ import java.util.HashMap;
 
 public class LongestConsecSeq {
     public int longestConsecutive(int[] nums) {
-        if (nums.length == 0) {
+        int n = nums.length;
+        if (n == 0) {
             return 0;
         }
 
-        Map<Integer, Boolean> map = new HashMap<>();
-        for (int i = 0; i < nums.length; ++i) {
-            map.put(nums[i], true);
+        Set<Integer> set = new HashSet<>();
+        for (int i = 0; i < n; ++i) {
+            set.add(nums[i]);
         }
 
-        Iterator<Integer> iter = map.keySet().iterator();
         int max = Integer.MIN_VALUE;
-        while (iter.hasNext()) {
-            int num = iter.next();
-            if (map.get(num) == false) {
+        for (int i = 0; i < n; ++i) {
+            int num = nums[i];
+            if (!set.contains(num)) {
                 continue;
             }
-            map.put(num, false);
-            int tmp = num - 1;
-            int count = 1;
-            while (map.containsKey(tmp) && map.get(tmp) == true) {
-                map.put(tmp, false);
-                ++count;
-                --tmp;
+            
+            set.remove(num);
+            while (set.contains(--num)) {
+                set.remove(num);
             }
+            int count = nums[i] - num;
 
-            tmp = num + 1;
-            while (map.containsKey(tmp) && map.get(tmp) == true) {
-                map.put(num, false);
-                ++count;
-                ++tmp;
+            num = nums[i];
+            while (set.contains(++num)) {
+                set.remove(num);
             }
+            count += num - nums[i] - 1;
             max = Math.max(max, count);
         }
 
