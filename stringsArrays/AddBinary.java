@@ -5,80 +5,50 @@
  * http://www.programcreek.com/2014/05/leetcode-add-binary-java/
  */
 
+/*
+ * time: O(m + n)
+ * space: O(n)
+ */
+
 public class AddBinary {
     public String addBinary(String a, String b) {
-        StringBuilder sb = new StringBuilder<>();
+        int al = a.length();
+        int bl = b.length();
+        if (al < bl) {
+            return addBinary(b, a);
+        }
+
+        StringBuilder sb = new StringBuilder();
         boolean carry = false;
-        int i = 0, j = 0;
-        while (i < a.length() && j < b.length()) {
+        int i = al - 1, j = bl - 1;
+        while (i >= 0 && j >= 0) {
             char c1 = a.charAt(i);
             char c2 = b.charAt(j);
-            char c3 = '0';
+            char c3 = '1';
             if (c1 == '1' && c2 == '1') {
-                if (carry) {
-                    sb.append('1');
-                } else {
-                    sb.append('0');
-                    carry = true;
-                }
-            } else if (c1 == '1' && c2 == '0') {
-                if (carry) {
-                    sb.append('0');
-                } else {
-                    sb.append('1');
-                }
-            } else if (c1 == '0' && c2 == '1') {
-                if (carry) {
-                    sb.append('0');
-                } else {
-                    sb.append('1');
-                }
+                c3 = carry ? '1' : '0';
+                carry = true;
+            } else if (c1 == '0' && c2 == '0') {
+                c3 = carry ? '1' : '0';
+                carry = false;
             } else {
-                if (carry) {
-                    sb.append('1');
-                    carry = false;   
-                } else {
-                    sb.append('0');
-                }
+                c3 = carry ? '0' : '1';
             }
-            ++i;
-            ++j;
+            sb.append(c3);
+            --i;
+            --j;
         }
 
-        while (i < a.length()) {
+        while (i >= 0) {
+            char c3 = '1';
             if (a.charAt(i) == '1') {
-                if (carry) {
-                    sb.append('0');
-                } else {
-                    sb.append('1');
-                }
+                c3 = carry ? '0' : '1';
             } else {
-                if (carry) {
-                    sb.append('1');
-                    carry = false;
-                } else {
-                    sb.append('0');
-                }
+                c3 = carry ? '1' : '0';
+                carry = false;
             }
-            ++i;
-        }
-
-        while (j < b.length()) {
-            if (b.charAt(j) == '1') {
-                if (carry) {
-                    sb.append('0');
-                } else {
-                    sb.append('1');
-                }
-            } else {
-                if (carry) {
-                    sb.append('1');
-                    carry = false;
-                } else {
-                    sb.append('0');
-                }
-            }
-            ++j;
+            sb.append(c3);
+            --i;
         }
 
         if (carry) {
