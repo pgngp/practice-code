@@ -22,6 +22,27 @@ public class Triangle {
             return 0;
         }
 
+        int[] cache = new int[n];
+        for (int i = 0; i < n; ++i) {
+            cache[i] = triangle.get(n - 1).get(i);
+        }
+
+        for (int i = n - 2; i >= 0; --i) {
+            List<Integer> list = triangle.get(i);
+            for (int j = 0; j < list.size(); ++j) {
+                cache[j] = list.get(j) + Math.min(cache[j], cache[j + 1]);
+            }
+        }
+
+        return cache[0];
+    }
+
+    public int minimumTotal2(List<List<Integer>> triangle) {
+        int n = triangle.size();
+        if (n == 0 || triangle.get(0).size() == 0) {
+            return 0;
+        }
+
         int[][] cache = new int[n][n];
         for (int row = 0; row < n; ++row) {
             for (int col = 0; col < n; ++col) {
