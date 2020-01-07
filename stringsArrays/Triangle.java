@@ -34,11 +34,8 @@ public class Triangle {
     }
 
     private int dfs(List<List<Integer>> triangle, int i, int j, int[][] cache) {
-        int n = triangle.size();
-        if (i >= n) {
+        if (i >= triangle.size()) {
             return 0;
-        } else if (i == n - 1) {
-            return triangle.get(i).get(j);
         } else if (cache[i][j] != Integer.MAX_VALUE) {
             return cache[i][j];
         }
