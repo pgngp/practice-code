@@ -13,6 +13,11 @@
  * http://www.programcreek.com/2013/01/leetcode-triangle-java/
  */
 
+/*
+ * time: O(mn), where m is the average number of elements in each row and n is the number of rows
+ * space: O(n)
+ */
+
 import java.util.*;
 
 public class Triangle {
