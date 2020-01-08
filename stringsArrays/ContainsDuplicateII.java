@@ -4,10 +4,34 @@
  * http://www.programcreek.com/2014/05/leetcode-contains-duplicate-ii-java/
  */
 
+/*
+ * time: O(n)
+ * space: O(n)
+ */
+
 import java.util.*;
 
 public class ContainsDuplicateII {
     public boolean containsNearbyDuplicate(int[] nums, int k) {
+        if (nums.length < 2) {
+            return false;
+        }
+
+        Set<Integer> set = new HashSet<>();
+        for (int i = 0; i < nums.length; ++i) {
+            if (k < i) {
+                set.remove(nums[i - k - 1]);
+            }
+
+            if (!set.add(nums[i])) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public boolean containsNearbyDuplicate2(int[] nums, int k) {
         if (nums.length < 2) {
             return false;
         }
