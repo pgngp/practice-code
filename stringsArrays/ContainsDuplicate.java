@@ -5,8 +5,8 @@
  */
 
 /*
- * time: O(n)
- * space: O(n)
+ * time: O(nlogn)
+ * space: O(1)
  */
 
 import java.util.*;
@@ -16,15 +16,14 @@ public class ContainsDuplicate {
         if (nums.length < 2) {
             return false;
         }
-
-        Set<Integer> set = new HashSet<>();
-        for (int i = 0; i < nums.length; ++i) {
-            if (set.contains(nums[i])) {
+        
+        Arrays.sort(nums);
+        for (int i = 1; i < nums.length; ++i) {
+            if (nums[i - 1] == nums[i]) {
                 return true;
             }
-            set.add(nums[i]);
         }
-
+        
         return false;
     }
 
