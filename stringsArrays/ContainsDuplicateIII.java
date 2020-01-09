@@ -4,33 +4,39 @@
  * http://www.programcreek.com/2014/06/leetcode-contains-duplicate-iii-java/
  */
 
+/*
+ * time: O(nlogk)
+ * space: O(k)
+ */
+
 import java.util.*;
 
 public class ContainsDuplicateIII {
     public boolean containsNearbyAlmostDuplicate(int[] nums, int k, int t) {
-        if (nums.length < 2 || t < 0) {
+        if (nums.length < 2 || k < 0 || t < 0) {
             return false;
         }
 
-        TreeSet<Integer> set = new TreeSet<>();
+        TreeSet<Long> set = new TreeSet<>();
+        long tl = (long) t;
         for (int i = 0; i < nums.length; ++i) {
-            if (k < i) {
-                set.remove(nums[i - k - 1]);
-            }
-
-            int num = nums[i];
+            long num = nums[i];
             if (!set.add(num)) {
                 return true;
             }
 
-            Integer lower = set.lower(num);
-            if (lower != null && (long) num - lower <= (long) t) {
+            Long lower = set.lower(num);
+            if (lower != null && num - lower <= tl) {
                 return true;
             }
 
-            Integer higher = set.higher(num);
-            if (higher != null && higher - (long) num <= (long) t) {
+            Long higher = set.higher(num);
+            if (higher != null && higher - num <= tl) {
                 return true;
+            }
+            
+            if (k <= i) {
+                set.remove((long) nums[i - k]);
             }
         }
 
