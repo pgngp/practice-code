@@ -13,6 +13,34 @@ public class LongestSubstr {
             return n;
         }
 
+        int[] arr = new int[127];
+        for (int i = 0; i < arr.length; ++i) {
+            arr[i] = -1;
+        }
+
+        int max = Integer.MIN_VALUE, count = 0;
+        for (int i = 0; i < n; ++i) {
+            char c = s.charAt(i);
+            int idx = c - '\u0000';
+            if (i - count <= arr[idx]) {
+                max = Math.max(max, count);
+                count = i - arr[idx];
+            } else {
+                ++count;
+            }
+            arr[idx] = i;
+        }
+        max = Math.max(max, count);
+
+        return max;
+    }
+
+    public int lengthOfLongestSubstring2(String s) {
+        int n = s.length();
+        if (n <= 1) {
+            return n;
+        }
+
         Map<Character, Integer> map = new HashMap<>();
         int max = Integer.MIN_VALUE, count = 0;
         for (int i = 0; i < n; ++i) {
