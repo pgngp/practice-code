@@ -4,6 +4,11 @@
  * http://www.programcreek.com/2013/02/leetcode-longest-substring-without-repeating-characters-java/
  */
 
+/*
+ * time: O(n)
+ * space: O(1)
+ */
+
 import java.util.*;
 
 public class LongestSubstr {
