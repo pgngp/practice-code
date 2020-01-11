@@ -9,35 +9,30 @@ import java.util.*;
 
 public class LongestSubstrII {
     public int lengthOfLongestSubstringTwoDistinct(String s) {
-        int n = s.length();
-        if (n <= 2) {
-            return n;
+        if (s.length() <= 2) {
+            return s.length();
         }
 
         Map<Character, Integer> map = new HashMap<>();
-        Deque<Character> q = new ArrayDeque<>();
         int max = Integer.MIN_VALUE, count = 0;
-        for (int i = 0; i < n; ++i) {
+        for (int i = 0; i < s.length(); ++i) {
             char c = s.charAt(i);
-            if (map.containsKey(c)) {
-                map.put(c, i);
+            if (map.containsKey(c) || map.size() < 2) {
                 ++count;
-            } else if (map.size() < 2) {
-                map.put(c, i);
-                ++count;
-                q.addLast(c);
             } else {
-                char x = q.removeFirst();
-                if (x == s.charAt(i - 1)) {
-                    q.addLast(x);
-                    x = q.removeFirst();
-                }
                 max = Math.max(max, count);
+                Iterator<Character> it = map.keySet().iterator();
+                char x = ' ';
+                while (it.hasNext()) {
+                    x = it.next();
+                    if (x != s.charAt(i - 1)) {
+                        break; 
+                    }
+                }
                 count = i - map.get(x);
                 map.remove(x);
-                map.put(c, i);
-                q.addLast(c);
             }
+            map.put(c, i);
         }
         max = Math.max(max, count);
 
