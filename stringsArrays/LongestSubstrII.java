@@ -17,20 +17,50 @@ public class LongestSubstrII {
         int max = Integer.MIN_VALUE, count = 0;
         for (int i = 0; i < s.length(); ++i) {
             char c = s.charAt(i);
-            if (map.containsKey(c) || map.size() < 2) {
+            if (map.size() < 2 || map.containsKey(c)) {
                 ++count;
             } else {
                 max = Math.max(max, count);
-                Iterator<Character> it = map.keySet().iterator();
-                char x = ' ';
-                while (it.hasNext()) {
-                    x = it.next();
-                    if (x != s.charAt(i - 1)) {
-                        break; 
-                    }
+                int tmp = Collections.min(map.values());
+                count = i - tmp;
+                map.remove(s.charAt(tmp));
+            }
+            map.put(c, i);
+        }
+        max = Math.max(max, count);
+
+        return max;
+    }
+
+    public int lengthOfLongestSubstringTwoDistinct2(String s) {
+        if (s.length() <= 2) {
+            return s.length();
+        }
+
+        Map<Character, Integer> map = new HashMap<>();
+        int max = Integer.MIN_VALUE, count = 0;
+        char p1 = ' ', p2 = ' ';
+        for (int i = 0; i < s.length(); ++i) {
+            char c = s.charAt(i);
+            if (map.containsKey(c)) {
+                ++count;
+                if (c != p2) {
+                    p1 = p2;
+                    p2 = c;
                 }
-                count = i - map.get(x);
-                map.remove(x);
+            } else if (map.size() < 2) {
+                ++count;
+                if (p1 == ' ') {
+                    p1 = c;
+                } else {
+                    p2 = c;
+                }
+            } else {
+                max = Math.max(max, count);
+                count = i - map.get(p1);
+                map.remove(p1);
+                p1 = p2;
+                p2 = c;
             }
             map.put(c, i);
         }
