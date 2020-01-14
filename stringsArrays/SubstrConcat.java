@@ -12,10 +12,10 @@ public class SubstrConcat {
         List<Integer> result = new ArrayList<>();
         int n = s.length();
         int numWords = words.length;
-        if (n == 0 || numWords == 0) {
+        if (n == 0 || numWords == 0 || n < numWords * words[0].length()) {
             return result;
         }
-
+        
         Map<String, Integer> map = new HashMap<>();
         for (String item : words) {
             if (map.containsKey(item)) {
@@ -27,10 +27,16 @@ public class SubstrConcat {
 
         int wordLen = words[0].length();
         int i = 0, j = wordLen;
+        Map<String, Integer> map2 = new HashMap<>();
         while (j <= n) {
-            if (map.containsKey(s.substring(i, j))) {
-                Map<String, Integer> copy = new HashMap<>(map);
-                helper(s, copy, result, i, wordLen, numWords);
+            String substr = s.substring(i, j);
+            if (map.containsKey(substr)) {
+                map2.putAll(map);
+                map2.put(substr, map2.get(substr) - 1);
+                if (helper(s, map2, j, wordLen) == numWords) {
+                    result.add(i);
+                }
+                map2.clear();
             }
             ++i;
             ++j;
@@ -39,10 +45,9 @@ public class SubstrConcat {
         return result;
     }
 
-    private void helper(String s, Map<String, Integer> map, List<Integer> result, int pos, int len, int numWords) {
-        int start = pos;
+    private int helper(String s, Map<String, Integer> map, int start, int len) {
         int end = start + len;
-        int count = 0;
+        int count = 1;
         while (end <= s.length()) {
             String substr = s.substring(start, end);
             if (map.containsKey(substr) && map.get(substr) > 0) {
@@ -50,16 +55,12 @@ public class SubstrConcat {
                 end = start + len;
                 map.put(substr, map.get(substr) - 1);
                 ++count;
-            } else if (count == numWords) {
-                break;
             } else {
-                return;
+                break;
             }
         }
-
-        if (count == numWords) {
-            result.add(pos);
-        }
+        
+        return count;
     }
 
     public static void main(String[] args) {
