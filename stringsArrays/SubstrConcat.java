@@ -5,6 +5,11 @@
  * http://www.programcreek.com/2014/06/leetcode-substring-with-concatenation-of-all-words-java/
  */
 
+/*
+ * time: O(n * nw * wl)
+ * space: O(nw * wl)
+ */
+
 import java.util.*;
 
 public class SubstrConcat {
@@ -16,6 +21,7 @@ public class SubstrConcat {
             return result;
         }
         
+        // time: O(nw * wl); space: O(nw)
         Map<String, Integer> map = new HashMap<>();
         for (String item : words) {
             if (map.containsKey(item)) {
@@ -25,6 +31,7 @@ public class SubstrConcat {
             }
         }
 
+        // time: (n * nw * wl); space: O(nw * wl)
         int wordLen = words[0].length();
         int i = 0, j = wordLen;
         Map<String, Integer> map2 = new HashMap<>();
@@ -45,6 +52,7 @@ public class SubstrConcat {
         return result;
     }
 
+    // time: O(nw * wl); space: O(wl)
     private int helper(String s, Map<String, Integer> map, int start, int len) {
         int end = start + len;
         int count = 1;
