@@ -5,6 +5,11 @@
  * http://www.programcreek.com/2014/05/leetcode-minimum-window-substring-java/
  */
 
+/*
+ * time: O(n)
+ * space: O(n)
+ */
+
 import java.util.*;
 
 public class MinWindowSubstr {
