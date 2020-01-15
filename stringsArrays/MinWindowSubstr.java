@@ -16,48 +16,48 @@ public class MinWindowSubstr {
             return result;
         }
 
-        Map<Character, Integer> countMap = new HashMap<>();
-        Map<Character, Integer> map = new HashMap<>();
-        Deque<Integer> q = new ArrayDeque<>();
+        // refmap
+        Map<Character, Integer> refMap = new HashMap<>();
         for (int i = 0; i < tl; ++i) {
             char c = t.charAt(i);
-            countMap.put(c, countMap.getOrDefault(c, 0) + 1);
-            map.put(c, 0);
+            refMap.put(c, refMap.getOrDefault(c, 0) + 1);
         }
 
         int i = 0, j = 0, min = Integer.MAX_VALUE, count = 0;
-        while (i <= j && j < sl) {
-            while (j < sl && count < tl) {
-                char c = s.charAt(j);
-                if (map.containsKey(c)) {
-                    if (map.get(c) < countMap.get(c)) {
-                        ++count;
-                    }
-                    map.put(c, map.get(c) + 1);
-                    q.addLast(j);
+        Deque<Integer> q = new ArrayDeque<>();
+        Map<Character, Integer> map = new HashMap<>();
+        while (j < sl) {
+            char c = s.charAt(j);
+            if (refMap.containsKey(c)) {
+                if (!map.containsKey(c) || map.get(c) < refMap.get(c)) {
+                    ++count;
                 }
-                ++j;
+                map.put(c, map.getOrDefault(c, 0) + 1);
+                q.addLast(j);
             }
+            ++j;
 
             if (count < tl) {
-                break;
-            } else if (min > j - i) {
+                continue;
+            }
+
+            if (min > j - i) {
                 min = j - i;
                 result = s.substring(i, j);
             }
-
+            
             while (q.size() > 0 && count == tl) {
                 i = q.removeFirst();
-                char c = s.charAt(i);
-                if (map.get(c) == countMap.get(c)) {
+                char d = s.charAt(i);
+                if (map.get(d) <= refMap.get(d)) {
                     --count;
                 }
-                map.put(c, map.get(c) - 1);
-
+                
                 if (min > j - i) {
                     min = j - i;
                     result = s.substring(i, j);
                 }
+                map.put(d, map.get(d) - 1);
             }
         }
 
