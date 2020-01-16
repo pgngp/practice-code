@@ -5,10 +5,35 @@
  * http://www.programcreek.com/2014/02/leetcode-reverse-words-in-a-string-java/
  */
 
+/*
+ * time: O(n)
+ * space: O(n)
+ */
+
 import java.util.*;
 
 public class ReverseWords {
     public String reverseWords(String s) {
+        List<String> list = Arrays.asList(s.trim().split("\\s+"));
+        Collections.reverse(list);
+        return String.join(" ", list);
+    }
+
+    public String reverseWords3(String s) {
+        String[] arr = s.trim().split("\\s+");
+        if (arr.length == 0) {
+            return "";
+        }
+        StringBuilder sb = new StringBuilder();
+        for (int i = arr.length - 1; i > 0; --i) {
+            sb.append(arr[i]).append(" ");
+        }
+        sb.append(arr[0]);
+
+        return sb.toString();
+    }
+
+    public String reverseWords2(String s) {
         if (s.length() <= 1) {
             return s.trim();
         }
