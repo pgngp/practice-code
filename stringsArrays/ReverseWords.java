@@ -9,13 +9,13 @@ import java.util.*;
 
 public class ReverseWords {
     public String reverseWords(String s) {
-        int n = s.length();
-        if (n <= 1) {
+        if (s.length() <= 1) {
             return s.trim();
         }
 
         // reverse chars
-        char[] arr = s.toCharArray();
+        char[] arr = s.trim().toCharArray();
+        int n = arr.length;
         int i = 0, j = n - 1;
         while (i < j) {
             char tmp = arr[i];
@@ -56,10 +56,6 @@ public class ReverseWords {
         // remove leading spaces and combine spaces in middle
         i = 0;
         j = 0;
-        while (j < n && arr[j] == ' ') {
-            ++j;
-        }
-
         while (j < n) {
             if (arr[j] == ' ' && arr[j - 1] == ' ') {
                 ++j;
