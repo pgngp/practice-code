@@ -5,10 +5,45 @@
  * http://www.programcreek.com/2014/03/leetcode-find-minimum-in-rotated-sorted-array-ii-java/
  */
 
+/*
+ * time: O(n)
+ * space: O(1)
+ */
+
 import java.util.*;
 
 public class MinRotatedSortedArrII {
     public int findMin(int[] nums) {
+        int n = nums.length, min = nums[0];
+        if (n == 1 || nums[0] < nums[n - 1]) {
+            return min;
+        }
+
+        int s = 0, e = n - 1;
+        while (s <= e) {
+            int m = (s + e) / 2;
+            if (s == e) {
+                min = nums[s];
+                break;
+            } else if (m > 0 && nums[m - 1] > nums[m]) { // min is mid
+                min = nums[m];
+                break;
+            } else if (nums[s] > nums[m]) { // min is on left
+                e = m - 1;
+            } else if (nums[m] > nums[e]) { // min is on right
+                s = m + 1;
+            } else if (nums[s] == nums[e]) {
+                ++s;
+            } else {
+                min = nums[s];
+                break;
+            }
+        }
+
+        return min;
+    }
+
+    public int findMin2(int[] nums) {
         return helper(nums, 0, nums.length - 1);
     }
 
