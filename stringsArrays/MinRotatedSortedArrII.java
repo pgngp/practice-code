@@ -14,6 +14,28 @@ import java.util.*;
 
 public class MinRotatedSortedArrII {
     public int findMin(int[] nums) {
+        int s = 0, e = nums.length - 1, min = nums[0];
+        while (s <= e) {
+            int m = s + (e - s) / 2;
+            if (s == e || nums[s] < nums[e]) {
+                min = nums[s];
+                break;
+            } else if (m > 0 && nums[m - 1] > nums[m]) {
+                min = nums[m];
+                break;
+            } else if (nums[m] > nums[e]) {
+                s = m + 1;
+            } else if (nums[s] > nums[m]) {
+                e = m - 1;
+            } else {
+                ++s;   
+            }
+        }
+
+        return min;
+    }
+
+    public int findMin3(int[] nums) {
         int n = nums.length, min = nums[0];
         if (n == 1 || nums[0] < nums[n - 1]) {
             return min;
