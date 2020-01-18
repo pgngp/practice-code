@@ -4,6 +4,11 @@
  * http://www.programcreek.com/2014/06/leetcode-search-in-rotated-sorted-array-ii-java/
  */
 
+/*
+ * time: O(log n), but will be O(n) in the worst case
+ * space: O(1)
+ */
+
 import java.util.*;
 
 public class SearchRotatedSortedArrII {
