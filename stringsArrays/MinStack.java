@@ -10,7 +10,7 @@
 
 /*
  * time: O(1)
- * space: O(1)
+ * space: O(n)
  */
 
 import java.util.*;
