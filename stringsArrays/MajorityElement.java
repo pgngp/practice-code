@@ -8,22 +8,13 @@ import java.util.*;
 
 public class MajorityElement {
     public int majorityElement(int[] nums) {
-        int n = nums.length;
-        if (n == 1) {
-            return nums[0];
-        }
-
         Map<Integer, Integer> map = new HashMap<>();
         int maxNum = nums[0], maxCount = 1;
         for (int num : nums) {
-            if (!map.containsKey(num)) {
-                map.put(num, 1);   
-            } else {
-                map.put(num, map.get(num) + 1);
-            }
-
-            if (maxCount < map.get(num)) {
-                maxCount = map.get(num);
+            int tmp = map.getOrDefault(num, 0) + 1;
+            map.put(num, tmp);
+            if (maxCount < tmp) {
+                maxCount = tmp;
                 maxNum = num;
             }
         }
