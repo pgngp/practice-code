@@ -12,29 +12,38 @@ import java.util.*;
 
 public class MinStack {
     private Deque<Integer> q;
-    private Queue<Integer> heap;
+    private TreeMap<Integer, Integer> map;
+    private int min;
 
     public MinStack() {
-        this.q = new ArrayDeque<>();
-        this.heap = new PriorityQueue<>();
+        q = new ArrayDeque<>();
+        map = new TreeMap<>();
+        min = Integer.MAX_VALUE;
     }
     
     public void push(int x) {
-        this.q.addFirst(x);
-        this.heap.offer(x);
+        q.addFirst(x);
+        map.put(x, map.getOrDefault(x, 0) + 1);
+        min = Math.min(min, x);
     }
     
     public void pop() {
-        this.heap.remove(top());
-        this.q.removeFirst();
+        int x = top();
+        q.removeFirst();
+        if (map.get(x) > 1) {
+            map.put(x, map.get(x) - 1);
+        } else {
+            map.remove(x);
+            min = map.size() == 0 ? Integer.MAX_VALUE : map.firstKey();
+        }
     }
     
     public int top() {
-        return this.q.getFirst();
+        return q.getFirst();
     }
     
     public int getMin() {
-        return this.heap.peek();
+        return min;
     }
 
     public static void main(String[] args) {
