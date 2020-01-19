@@ -8,42 +8,37 @@
  * http://www.programcreek.com/2014/02/leetcode-min-stack-java/
  */
 
+/*
+ * time: O(1)
+ * space: O(1)
+ */
+
 import java.util.*;
+import javafx.util.*;
 
 public class MinStack {
-    private Deque<Integer> q;
-    private TreeMap<Integer, Integer> map;
-    private int min;
+    private Deque<Pair<Integer, Integer>> stack;
 
     public MinStack() {
-        q = new ArrayDeque<>();
-        map = new TreeMap<>();
-        min = Integer.MAX_VALUE;
+        stack = new ArrayDeque<>();      
     }
     
     public void push(int x) {
-        q.addFirst(x);
-        map.put(x, map.getOrDefault(x, 0) + 1);
-        min = Math.min(min, x);
+        int min = stack.size() > 0 ? Math.min(x, getMin()) : x;
+        Pair<Integer, Integer> pair = new Pair<>(x, min);
+        stack.offerLast(pair);
     }
     
     public void pop() {
-        int x = top();
-        q.removeFirst();
-        if (map.get(x) > 1) {
-            map.put(x, map.get(x) - 1);
-        } else {
-            map.remove(x);
-            min = map.size() == 0 ? Integer.MAX_VALUE : map.firstKey();
-        }
+        stack.pollLast();
     }
     
     public int top() {
-        return q.getFirst();
+        return stack.peekLast().getKey();
     }
     
     public int getMin() {
-        return min;
+        return stack.peekLast().getValue();
     }
 
     public static void main(String[] args) {
