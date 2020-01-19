@@ -4,6 +4,11 @@
  * http://www.programcreek.com/2014/02/leetcode-majority-element-java/
  */
 
+/*
+ * time: O(n)
+ * space: O(1)
+ */
+
 import java.util.*;
 
 public class MajorityElement {
