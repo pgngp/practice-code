@@ -8,18 +8,19 @@ import java.util.*;
 
 public class MajorityElement {
     public int majorityElement(int[] nums) {
-        Map<Integer, Integer> map = new HashMap<>();
-        int maxNum = nums[0], maxCount = 1;
+        int curr = nums[0], count = 0;
         for (int num : nums) {
-            int tmp = map.getOrDefault(num, 0) + 1;
-            map.put(num, tmp);
-            if (maxCount < tmp) {
-                maxCount = tmp;
-                maxNum = num;
+            if (count == 0) {
+                ++count;
+                curr = num;
+            } else if (curr == num) {
+                ++count;
+            } else {
+                --count;
             }
         }
 
-        return maxNum;
+        return curr;
     }
 
     public static void main(String[] args) {
