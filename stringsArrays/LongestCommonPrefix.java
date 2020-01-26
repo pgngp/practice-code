@@ -4,13 +4,19 @@
  * http://www.programcreek.com/2014/02/leetcode-longest-common-prefix-java/
  */
 
+/*
+ * time: O(mn), where m is array size and n is the min length of all strings
+ * space: O(1)
+ */
+
 import java.util.*;
 
 public class LongestCommonPrefix {
     public String longestCommonPrefix(String[] strs) {
-        if (strs.length == 0) {
+        int m = strs.length;
+        if (m == 0) {
             return "";
-        } else if (strs.length == 1) {
+        } else if (m == 1) {
             return strs[0];
         }
 
