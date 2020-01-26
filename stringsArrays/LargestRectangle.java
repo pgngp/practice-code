@@ -9,24 +9,40 @@ import java.util.*;
 
 public class LargestRectangle {
     public int largestRectangleArea(int[] heights) {
-        int n = heights.length;
-        if (n == 0) {
+        if (heights.length == 0) {
             return 0;
-        } 
+        }
 
-        int max = Integer.MIN_VALUE;
-        for (int i = 0; i < n; ++i) {
-            max = Math.max(max, heights[i]);
-            int currHeight = heights[i];
-            int count = 1;
-            for (int j = i - 1; j >= 0; --j) {
-                ++count;
-                currHeight = Math.min(currHeight, heights[j]);
-                max = Math.max(max, currHeight * count);
+        Deque<Integer> stack = new ArrayDeque<>();
+        int i = 0, max = heights[0];
+        for (; i < heights.length; ++i) {
+            while (!stack.isEmpty() && heights[stack.peekFirst()] > heights[i]) {
+                int top = stack.removeFirst();
+                int area = stack.isEmpty() ? heights[top] * i : heights[top] * (i - 1 - stack.peekFirst());
+                max = Math.max(max, area);
             }
+            stack.addFirst(i);
+        }
+
+        while (!stack.isEmpty()) {
+            int top = stack.removeFirst();
+            int area = stack.isEmpty() ? heights[top] * i : heights[top] * (i - 1 - stack.peekFirst());
+            max = Math.max(max, area);
         }
 
         return max;
+    }
+
+    private void printMatrix(int[][] m) {
+        System.out.println("[");
+        for (int i = 0; i < m.length; ++i) {
+            System.out.print("  [ ");
+            for (int j = 0; j < m[0].length; ++j) {
+                System.out.print(m[i][j] + " ");
+            }
+            System.out.println("]");
+        }
+        System.out.println("]");
     }
 
     public static void main(String[] args) {
