@@ -5,6 +5,11 @@
  * http://www.programcreek.com/2014/02/leetcode-largest-number-java/
  */
 
+/*
+ * time: O(nklogn), where n is the size of nums and k is the avg number of digits in each num
+ * space: O(n)
+ */
+
 import java.util.*;
 
 public class LargestNumber {
@@ -16,7 +21,7 @@ public class LargestNumber {
 
         Arrays.sort(sArr, new Comparator<String>() {
             public int compare(String s1, String s2) {
-                return (int) (Long.parseLong(s2 + s1) - Long.parseLong(s1 + s2));
+                return (s2 + s1).compareTo(s1 + s2);
             }
         });
 
