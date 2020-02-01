@@ -11,21 +11,16 @@ import java.util.*;
 public class GasStations {
     public int canCompleteCircuit(int[] gas, int[] cost) {
         int n = gas.length;
-        List<Integer> list = new ArrayList<>();
         for (int i = 0; i < n; ++i) {
-            if (gas[i] >= cost[i]) {
-                list.add(i);
+            if (gas[i] < cost[i]) {
+                continue;
             }
-        }
-
-        for (int i = 0; i < list.size(); ++i) {
-            int start = list.get(i);
-            int avail = gas[start];
-            int idx = start;
+            int avail = gas[i];
+            int idx = i;
             while (avail >= cost[idx]) {
                 avail -= cost[idx];
                 idx = (idx + 1) < n ? idx + 1 : 0;
-                if (idx == start) {
+                if (idx == i) {
                     return idx;
                 }
                 avail += gas[idx];
