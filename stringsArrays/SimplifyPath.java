@@ -9,6 +9,11 @@
  * http://www.programcreek.com/2014/04/leetcode-simplify-path-java/
  */
 
+/*
+ * time: O(n), where n is the number of dirs
+ * space: O(n)
+ */
+
 import java.util.*;
 
 public class SimplifyPath {
@@ -30,11 +35,7 @@ public class SimplifyPath {
             newPath.append("/").append(stack.removeLast());
         }
 
-        if (newPath.length() == 0) {
-            newPath.append("/");
-        }
-
-        return newPath.toString();
+        return newPath.length() > 0 ? newPath.toString() : newPath.append("/").toString();
     }
 
     public static void main(String[] args) {
