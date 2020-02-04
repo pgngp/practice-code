@@ -6,28 +6,29 @@
  * http://www.programcreek.com/2014/03/leetcode-gas-station-java/
  */
 
+/*
+ * time: O(n)
+ * space: O(1)
+ */
+
 import java.util.*;
 
 public class GasStations {
     public int canCompleteCircuit(int[] gas, int[] cost) {
-        int n = gas.length;
-        for (int i = 0; i < n; ++i) {
-            if (gas[i] < cost[i]) {
-                continue;
+        int diff = 0, remaining = 0, start = -1, total = 0;
+        for (int i = 0; i < gas.length; ++i) {
+            diff = gas[i] - cost[i];
+            remaining += diff;
+            if (start < 0 && remaining > 0) {
+                start = i;
+            } else if (remaining < 0) {
+                remaining = 0;
+                start = -1;
             }
-            int avail = gas[i];
-            int idx = i;
-            while (avail >= cost[idx]) {
-                avail -= cost[idx];
-                idx = (idx + 1) < n ? idx + 1 : 0;
-                if (idx == i) {
-                    return idx;
-                }
-                avail += gas[idx];
-            } 
+            total += diff;
         }
-        
-        return -1;
+
+        return total >= 0 ? Math.max(0, start) : -1;
     }
 
     public static void main(String[] args) {
