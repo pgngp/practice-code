@@ -11,6 +11,11 @@
  * http://www.programcreek.com/2014/03/leetcode-pascals-triangle-java/
  */
 
+/*
+ * time: O(n^2)
+ * space: O(1), not counting the space required for the output
+ */
+
 import java.util.*;
 
 public class PascalsTriangle {
