@@ -4,15 +4,23 @@
  * http://www.programcreek.com/2014/03/leetcode-container-with-most-water-java/
  */
 
+/*
+ * time: O(n)
+ * space: O(1)
+ */
+
 import java.util.*;
 
 public class WaterContainer {
     public int maxArea(int[] height) {
         int max = Integer.MIN_VALUE;
-        int n = height.length;
-        for (int i = 0; i < n; ++i) {
-            for (int j = i; j < n; ++j) {
-                max = Math.max(max, (j - i) * Math.min(height[i], height[j]));
+        int i = 0, j = height.length - 1;
+        while (i < j) {
+            max = Math.max(max, (j - i) * Math.min(height[i], height[j]));
+            if (height[i] <= height[j]) {
+                ++i;
+            } else {
+                --j;
             }
         }
 
