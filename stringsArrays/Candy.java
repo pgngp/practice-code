@@ -31,7 +31,6 @@ public class Candy {
                 list.add(i);
             }
         }
-        System.out.println("valleys: " + list);
         if (list.size() == 0) {
             return n;
         }
@@ -79,7 +78,6 @@ public class Candy {
                 ++j;
             }
         }
-        System.out.println("arr: " + Arrays.toString(arr));
 
         // Count
         int count = 0;
