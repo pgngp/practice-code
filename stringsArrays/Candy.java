@@ -16,51 +16,76 @@ public class Candy {
             return n;
         }
 
-        int[] arr = new int[n];
-        arr[0] = 0;
-        if (ratings[1] > ratings[0]) {
-            arr[1] = 1;
-        } else if (ratings[1] == ratings[0]) {
-            arr[1] = 0;
-        } else {
-            arr[0] = 1;
-            arr[1] = 0;
-        }
-
-        int min = 0;
-        int start = 0;
-        int count = 0;
-        for (int i = 2; i < n; ++i) {
-            if (ratings[i] > ratings[i - 1]) {
-                arr[i] = arr[i - 1] + 1;
-            } else if (ratings[i] == ratings[i - 1]) {
-                arr[i] = 0;
-            } else {
-                if (i == n - 1) {
-                    arr[i] = 0;
-                } else if (ratings[i + 1] < ratings[i]) {
-                    arr[i] = 1;
-                } else {
-                //if (ratings[i - 1] >= ratings[i - 2]) {
-                    arr[i] = arr[i - 1];
-                    arr[i - 1] += 1;
-                    int diff = 1 - min;
-                    for (int j = start; j < i - 1; ++j) {
-                        arr[j] += diff;
-                        count += arr[j];
-                    }
-                    start = i - 1;
+        // Find valleys
+        List<Integer> list = new ArrayList<>();
+        for (int i = 0; i < n; ++i) {
+            if (i == 0) {
+                if (ratings[i] < ratings[i + 1]) {
+                    list.add(i);
                 }
+            } else if (i == n - 1) {
+                if (ratings[i - 1] > ratings[i]) {
+                    list.add(i);
+                }
+            } else if (ratings[i - 1] > ratings[i] && ratings[i] <= ratings[i + 1]) {
+                list.add(i);
             }
-            min = Math.min(min, arr[i]);
+        }
+        System.out.println("valleys: " + list);
+        if (list.size() == 0) {
+            return n;
         }
 
-        int diff = 1 - min;
-        for (int i = start; i < n; ++i) {
-            arr[i] += diff;
-            count += arr[i];
+        // Start from valleys and move left and right
+        int[] arr = new int[n];
+        for (Integer i : list) {
+            arr[i] = 1;
+            int num = 2;
+            int j = i - 1;
+            
+            // Go left
+            while (j >= 0) {
+                if (ratings[j] < ratings[j + 1]) {
+                    break;
+                } else if (arr[j] != 0) {
+                    arr[j] = Math.max(arr[j], num);
+                    break;
+                } else if (ratings[j] == ratings[j + 1]) {
+                    arr[j] = 1;
+                    num = 2;
+                } else {
+                    arr[j] = num;
+                    ++num;
+                }
+                --j;
+            }
+
+            // Go right
+            num = 2;
+            j = i + 1;
+            while (j < n) {
+                if (ratings[j - 1] > ratings[j]) {
+                    break;
+                } else if (arr[j] != 0) {
+                    arr[j] = Math.max(arr[j], num);
+                    break;
+                } else if (ratings[j - 1] == ratings[j]) {
+                    arr[j] = 1;
+                    num = 2;
+                } else {
+                    arr[j] = num;
+                    ++num;
+                }
+                ++j;
+            }
         }
         System.out.println("arr: " + Arrays.toString(arr));
+
+        // Count
+        int count = 0;
+        for (int i = 0; i < n; ++i) {
+            count += arr[i];
+        }
 
         return count;
     }
