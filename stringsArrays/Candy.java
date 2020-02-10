@@ -7,6 +7,11 @@
  * http://www.programcreek.com/2014/03/leetcode-candy-java/
  */
 
+/*
+ * time: O(n)
+ * space: O(n)
+ */
+
 import java.util.*;
 
 public class Candy {
