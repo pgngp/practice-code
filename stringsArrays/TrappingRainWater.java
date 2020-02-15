@@ -9,35 +9,29 @@ import java.util.*;
 public class TrappingRainWater {
     public int trap(int[] height) {
         int n = height.length;
-        if (n == 0 || n == 1) {
+        if (n <= 2) {
             return 0;
         }
 
-        // Find local mins
-        List<Integer> localMins = new ArrayList<>();
-        int i = 0;
-        boolean isBottom = false;
-        while (i < n) {
-            if (i == 0) {
-                if (height[0] < height[1]) {
-                    localMins.add(0);
+        Deque<Integer> stack = new ArrayDeque<>();
+        int sum = 0;
+        for (int i = 0; i < n - 1; ++i) {
+            if (height[i] > height[i + 1]) {
+                stack.addFirst(i);
+            } else if (height[i] < height[i + 1]) {
+                Integer left = stack.peekFirst();
+                if (left == null) {
+                    continue;
                 }
-            } else if (i == n - 1) {
-                if (height[n - 2] > height[n - 1]) {
-                    localMins.add(i);
+                sum += Math.min(height[left], height[i + 1]) * (i - left);
+                if (height[left] <= height[i + 1]) {
+                    stack.removeFirst();
                 }
-            } else if (height[i - 1] > height[i] && height[i] < height[i + 1]) {
-                localMins.add(i);
-            } else if (height[i - 1] > height[i] && height[i] == height[i + 1]) {
-                isBottom = true;
-            } else if (isBottom && height[i] < height[i + 1]) {
-                isBottom = false;
-                list.add(i);
-            } else if (isBottom && height[i] > height[i + 1]) {
-                isBottom = false;
+                //stack.addFirst(i + 1);
             }
-            ++i;
         }
+
+        return sum;
     }
 
     public static void main(String[] args) {
