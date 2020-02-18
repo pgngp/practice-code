@@ -4,6 +4,11 @@
  * For example, given [0,1,0,2,1,0,1,3,2,1,2,1], return 6.
  */
 
+/*
+ * time: O(n)
+ * space: O(n)
+ */
+
 import java.util.*;
 
 public class TrappingRainWater {
