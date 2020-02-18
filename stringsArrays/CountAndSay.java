@@ -9,6 +9,11 @@
  * http://www.programcreek.com/2014/03/leetcode-count-and-say-java/
  */
 
+/*
+ * time: O(nm) where n is given and m is the average length of the string
+ * space: O(m)
+ */
+
 import java.util.*;
 
 public class CountAndSay {
