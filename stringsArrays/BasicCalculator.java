@@ -6,6 +6,11 @@
  * http://www.programcreek.com/2014/06/leetcode-basic-calculator-java/
  */
 
+/*
+ * time: O(n)
+ * space: O(n)
+ */
+
 import java.util.*;
 
 public class BasicCalculator {
@@ -16,7 +21,6 @@ public class BasicCalculator {
             char c = s.charAt(i);
             if (c == '(') {
                 stack.addFirst("(");
-                ++i;
             } else if (c == ')') {
                 String op1 = stack.removeFirst();
                 if (stack.peekFirst().equals("(")) {
@@ -24,8 +28,6 @@ public class BasicCalculator {
                 }
                 if (stack.size() == 0) {
                     stack.addFirst(op1);
-                    ++i;
-                    continue;
                 } else if (stack.peekFirst().equals("+")) {
                     stack.removeFirst();
                     String op2 = stack.removeFirst();
@@ -37,7 +39,6 @@ public class BasicCalculator {
                     int result = Integer.parseInt(op2) - Integer.parseInt(op1);
                     stack.addFirst(Integer.toString(result));
                 }
-                ++i;
             } else if (Character.isDigit(c)) {
                 int start = i;
                 while (i < s.length() && Character.isDigit(s.charAt(i))) {
@@ -57,15 +58,13 @@ public class BasicCalculator {
                         stack.addFirst(Integer.toString(result));
                     }
                 }
+                --i;
             } else if (c == '+') {
                 stack.addFirst("+");
-                ++i;
             } else if (c == '-') {
                 stack.addFirst("-");
-                ++i;
-            } else {
-                ++i;
             }
+            ++i;
         }
 
         if (stack.size() > 1 && (stack.peekFirst().equals("+") || stack.peekFirst().equals("-"))) {
