@@ -5,6 +5,13 @@
  * http://www.programcreek.com/2014/06/leetcode-shortest-palindrome-java/
  */
 
+/*
+ * time: O(n^2)
+ * space: O(n)
+ */
+
+import java.util.*;
+
 public class ShortestPalindrome {
     public String shortestPalindrome(String s) {
         int n = s.length();
