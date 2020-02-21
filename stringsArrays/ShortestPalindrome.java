@@ -6,7 +6,7 @@
  */
 
 /*
- * time: O(n^2)
+ * time: O(n)
  * space: O(n)
  */
 
@@ -15,21 +15,36 @@ import java.util.*;
 public class ShortestPalindrome {
     public String shortestPalindrome(String s) {
         int n = s.length();
-        int i = 0, end = n - 1, j = end;
-        String prefix = "";
-        while (i < j) {
-            if (s.charAt(i) != s.charAt(j)) {
-                i = 0;
-                prefix += s.charAt(end);
-                --end;
-                j = end;
-            } else {
+        if (n <= 1) {
+            return s;
+        }
+        
+        String rev = new StringBuilder(s).reverse().toString();
+        int suffixLen = getSuffixLength(s + "#" + rev);
+        String prefix = rev.substring(0, n - suffixLen);
+
+        return prefix + s;
+    }
+
+    private int getSuffixLength(String s) {
+        int n = s.length();
+        int[] arr = new int[n];
+        arr[0] = 0;
+        int i = 0, j = 1;
+        while (j < n) {
+            if (s.charAt(i) == s.charAt(j)) {
+                arr[j] = i + 1;
                 ++i;
-                --j;
+                ++j;
+            } else if (i == 0) {
+                arr[j] = 0;
+                ++j;
+            } else {
+                i = arr[i - 1];
             }
         }
 
-        return prefix + s;
+        return arr[n - 1];
     }
 
     public static void main(String[] args) {
