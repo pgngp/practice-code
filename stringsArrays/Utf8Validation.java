@@ -2,6 +2,11 @@
  * https://leetcode.com/problems/utf-8-validation/
  */
 
+/*
+ * time: O(n)
+ * space: O(1)
+ */
+
 public class Utf8Validation {
     public boolean validUtf8(int[] data) {
         int n = data.length;
