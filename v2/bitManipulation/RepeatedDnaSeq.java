@@ -6,6 +6,11 @@
  * http://www.programcreek.com/2014/03/leetcode-repeated-dna-sequences-java/
  */
 
+/*
+ * time: O(n)
+ * space: O(n)
+ */
+
 import java.util.*;
 
 public class RepeatedDnaSeq {
