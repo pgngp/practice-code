@@ -4,35 +4,25 @@
  * http://www.programcreek.com/2014/04/leetcode-bitwise-and-of-numbers-range-java/
  */
 
+/*
+ * time: O(1)
+ * space: O(1)
+ */
+
 public class BitwiseAndOfNumberRange {
     public int rangeBitwiseAnd(int m, int n) {
         if (m == n) {
             return m;
         }
 
-        int mNumBits = 0, nNumBits = 0, i = 0, pow = 1;
-        while (m >= pow) {
-            ++i;
-            pow <<= 1;
+        int count = 0;
+        while (m < n) {
+            m >>>= 1;
+            n >>>= 1;
+            ++count;
         }
-        mNumBits = m == 0 ? 0 : i - 1;
 
-        while (n >= pow) {
-            ++i;
-            pow <<= 1;
-        }
-        nNumBits = i - 1;
-        System.out.println("mNumBits: " + mNumBits + ", nNumBits: " + nNumBits);
-
-        int mask = 0;
-        if (mNumBits == nNumBits) {
-            mask = ~((1 << mNumBits) - 1);
-        } else {
-            mask = ~((1 << (mNumBits + 1)) - 1);
-        }
-        int result = (m & n & mask);
-
-        return result;
+        return n << count;
     }
 
     public static void main(String[] args) {
