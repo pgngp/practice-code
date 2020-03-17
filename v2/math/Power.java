@@ -13,11 +13,25 @@ public class Power {
         boolean isNegExp = n < 0 ? true : false;
         long exp = Math.abs((long) n);
         System.out.println("exp: " + exp);
-        double result = 1.0;
-        while (exp > 0) {
-            result *= x;
+        
+        double result = x;
+        double residue = 1.0;
+        if (exp % 2 == 1) {
+            residue = x;
             --exp;
         }
+
+        double prevResult = 1.0;
+        while (exp > 0) {
+            result *= result;
+            exp /= 2;
+            if (exp % 2 == 1) {
+                residue *= prevResult;
+                --exp;
+            }
+            prevResult = result;
+        }
+        result *= residue;
         System.out.println("result (*): " + result);
 
         if (isNegExp) {
