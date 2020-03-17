@@ -11,12 +11,14 @@ public class Power {
         }
 
         boolean isNegExp = n < 0 ? true : false;
-        n = Math.abs(n);
+        long exp = Math.abs((long) n);
+        System.out.println("exp: " + exp);
         double result = 1.0;
-        while (n > 0) {
+        while (exp > 0) {
             result *= x;
-            --n;
+            --exp;
         }
+        System.out.println("result (*): " + result);
 
         if (isNegExp) {
             result = 1.0 / result;
