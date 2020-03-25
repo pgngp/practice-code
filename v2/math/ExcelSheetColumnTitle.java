@@ -11,6 +11,11 @@
  * http://www.programcreek.com/2014/03/leetcode-excel-sheet-column-title-java/
  */
 
+/*
+ * time: O(log n (base 26))
+ * space: O(log n (base 26))
+ */
+
 public class ExcelSheetColumnTitle {
     public String convertToTitle(int n) {
         if (n <= 0) {
@@ -18,11 +23,24 @@ public class ExcelSheetColumnTitle {
         }
 
         StringBuilder sb = new StringBuilder();
+        boolean carryOver = false;
         while (n > 0) {
             int rem = n % 26;
-            rem = rem == 0 ? 26 : rem;
-            sb.append((char) ('A' + rem - 1));
             n /= 26;
+            if (rem == 0) {
+                rem = 26;
+                carryOver = true;
+            } else if (carryOver) {
+                if (rem == 1 && n == 0) {
+                    break;
+                } else if (rem == 1) {
+                    rem = 26;
+                } else {
+                    --rem;
+                    carryOver = false;
+                }
+            }
+            sb.append((char) ('A' + rem - 1));
         }
 
         return sb.reverse().toString();
