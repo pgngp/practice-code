@@ -7,24 +7,14 @@
 
 public class FactorialTrailingZeros {
     public int trailingZeroes(int n) {
-        int count = 0, product = 5;
+        int count = 0;
+        long product = 5;
         while (product <= n) {
             count += (n / product);
             product *= 5;
         }
 
         return count;
-    }
-
-    private long getSuffix(long n) {
-        String result = "";
-        while (n % 10 == 0) {
-            n /= 10;
-            result = "0" + result;
-        }
-        result = Long.toString(n % 10) + result;
-
-        return Long.parseLong(result);
     }
 
     public static void main(String[] args) {
