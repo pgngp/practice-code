@@ -11,8 +11,8 @@
  */
 
 /*
- * time: unknown
- * space: O(1)
+ * time: O(log n)
+ * space: O(log n)
  */
 
 import java.util.*;
