@@ -4,6 +4,11 @@
  * http://www.programcreek.com/2014/05/leetcode-divide-two-integers-java/
  */
 
+/*
+ * time: O((log n)^2)
+ * space: O(1)
+ */
+
 public class DivideTwoInts {
     public int divide(int dividend, int divisor) {
         if (dividend == 0) {
