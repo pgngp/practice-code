@@ -17,10 +17,17 @@ public class DivideTwoInts {
         long n = Math.abs((long) dividend);
         long d = Math.abs((long) divisor);
 
-        long count = 0;
-        while (n >= d) {
+        long count = 0, incr = 1, orig = d;
+        while (n >= orig) {
+            if (n >= d + d) {
+                d += d;
+                incr += incr;
+            } else {
+                d = orig;
+                incr = 1;
+            }
             n -= d;
-            ++count;
+            count += incr;
         }
 
         if (isNeg) {
