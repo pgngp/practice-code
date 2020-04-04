@@ -8,6 +8,10 @@ import java.util.*;
 
 public class MultiplyStrings {
     public String multiply(String num1, String num2) {
+        if (num1.charAt(0) == '0' || num2.charAt(0) == '0') {
+            return "0";
+        }
+
         char[] arr = new char[num1.length() + num2.length()];
         for (int i = 0; i < arr.length; ++i) {
             arr[i] = '0';
@@ -28,16 +32,11 @@ public class MultiplyStrings {
             
             if (carry > 0) {
                 arr[arrIdx] = (char) ('0' + (carry % 10));
-                //--arrIdx;
-            } else {
-                ++arrIdx;
+                --arrIdx;
             }
         }
+        ++arrIdx;
         System.out.println("arrIdx: " + arrIdx);
-
-        //for (; arrIdx >= 0; --arrIdx) {
-        //    arr[arrIdx] = '\u0000';
-        //}
 
         return new String(arr, arrIdx, arr.length - arrIdx);
     }
