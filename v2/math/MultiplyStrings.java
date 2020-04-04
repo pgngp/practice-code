@@ -4,6 +4,11 @@
  * http://www.programcreek.com/2014/05/leetcode-multiply-strings-java/
  */
 
+/*
+ * time: O(mn)
+ * space: O(m + n)
+ */
+
 import java.util.*;
 
 public class MultiplyStrings {
@@ -36,7 +41,6 @@ public class MultiplyStrings {
             }
         }
         ++arrIdx;
-        System.out.println("arrIdx: " + arrIdx);
 
         return new String(arr, arrIdx, arr.length - arrIdx);
     }
