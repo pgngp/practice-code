@@ -4,6 +4,11 @@
  * http://www.programcreek.com/2014/04/leetcode-max-points-on-a-line-java/
  */
 
+/*
+ * time: O(n^2)
+ * space: O(n)
+ */
+
 import java.util.*;
 
 public class MaxPointsOnALine {
