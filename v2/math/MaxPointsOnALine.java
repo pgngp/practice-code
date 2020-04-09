@@ -14,49 +14,41 @@ public class MaxPointsOnALine {
 
         // look at each pair
         int max = 1;
-        Map<List<Double>, Set<Integer>> map = new HashMap<>();
+        Map<Double, Set<Integer>> map = new HashMap<>();
         for (int i = 0; i < points.length - 1; ++i) {
+            int count = 1, duplicates = 0;
             System.out.println("[" + points[i][0] + "," + points[i][1] + "]");
             for (int j = i + 1; j < points.length; ++j) {
+                // check if duplicate
+                if (points[i][0] == points[j][0] && points[i][1] == points[j][1]) {
+                    ++duplicates;
+                    continue;
+                }
+
                 // slope
-                System.out.print("  [" + points[j][0] + "," + points[j][1] + "]: ");
-                double slope = ((double) (points[j][1] - points[i][1])) / (points[j][0] - points[i][0]);
+                double slope = ((double) (points[j][0] - points[i][0])) / (points[j][1] - points[i][1]);
                 if (slope == -0.0) {
                     slope = 0.0;
                 } else if (slope == Double.NEGATIVE_INFINITY) {
                     slope = Double.POSITIVE_INFINITY;
                 }
-
-                // constant
-                double constant = points[j][1] - (slope * points[j][0]);
-                if (constant == -0.0) {
-                    constant = 0.0;
-                } else if (constant == Double.POSITIVE_INFINITY || constant == Double.NEGATIVE_INFINITY) {
-                    constant = points[j][0];
-                }
-                System.out.println(" (s: " + slope + ", c: " + constant + ")");
+                System.out.println("  [" + points[j][0] + "," + points[j][1] + "]: " + slope);
                 
                 // put in map
-                List<Double> slopeConstantPair = new ArrayList<>();
-                slopeConstantPair.add(slope);
-                slopeConstantPair.add(constant);
-                if (Double.isNaN(slope) && Double.isNaN(constant)) {
-                    slopeConstantPair.add((double) points[j][0]);
-                    slopeConstantPair.add((double) points[j][1]);
-                }
                 Set<Integer> set = null;
-                if (map.containsKey(slopeConstantPair)) {
-                    set = map.get(slopeConstantPair);
+                if (map.containsKey(slope)) {
+                    set = map.get(slope);
                 } else {
                     set = new HashSet<>();
-                    map.put(slopeConstantPair, set);
+                    map.put(slope, set);
                 }
                 set.add(i);
                 set.add(j);
-                max = Math.max(max, set.size());
+                count = Math.max(count, set.size());
             }
+            map.clear();
+            max = Math.max(max, count + duplicates);
         }
-        System.out.println("map: " + map);
 
         return max;
     }
