@@ -14,7 +14,7 @@ public class MaxPointsOnALine {
 
         // look at each pair
         int max = 1;
-        Map<Double, Set<Integer>> map = new HashMap<>();
+        Map<Double, Integer> map = new HashMap<>();
         for (int i = 0; i < points.length - 1; ++i) {
             int count = 1, duplicates = 0;
             System.out.println("[" + points[i][0] + "," + points[i][1] + "]");
@@ -33,18 +33,9 @@ public class MaxPointsOnALine {
                     slope = Double.POSITIVE_INFINITY;
                 }
                 System.out.println("  [" + points[j][0] + "," + points[j][1] + "]: " + slope);
-                
-                // put in map
-                Set<Integer> set = null;
-                if (map.containsKey(slope)) {
-                    set = map.get(slope);
-                } else {
-                    set = new HashSet<>();
-                    map.put(slope, set);
-                }
-                set.add(i);
-                set.add(j);
-                count = Math.max(count, set.size());
+
+                map.put(slope, map.getOrDefault(slope, 1) + 1);
+                count = Math.max(count, map.get(slope));
             }
             map.clear();
             max = Math.max(max, count + duplicates);
