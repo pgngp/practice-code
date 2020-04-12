@@ -24,20 +24,21 @@ public class PerfectSquares {
             list.add(ps);
         }
         map.put(0, 1);
+        map.put(-1, n);
 
-        return Math.min(n, getCount(list, n, n, map));
+        return Math.min(n, getCount(list, n, map));
     }
 
-    private int getCount(List<Integer> list, int x, int n, Map<Integer, Integer> map) {
+    private int getCount(List<Integer> list, int x, Map<Integer, Integer> map) {
         if (map.containsKey(x)) {
             return map.get(x);
         } else if (x < 0) {
-            return n;
+            return map.get(-1);
         }
 
         int min = Integer.MAX_VALUE;
         for (int i = 0; i < list.size(); ++i) {
-            min = Math.min(min, 1 + getCount(list, x - list.get(i), n, map));
+            min = Math.min(min, 1 + getCount(list, x - list.get(i), map));
         }
         map.put(x, min);
 
