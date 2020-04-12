@@ -13,7 +13,7 @@ public class PerfectSquares {
         }
 
         Map<Integer, Integer> map = new HashMap<>();
-        Set<Integer> set = new TreeSet<>();
+        Set<Integer> set = new HashSet<>();
         int ps = 0;
         for (int i = 1; i < Integer.MAX_VALUE; i += 2) {
             ps += i;
@@ -21,19 +21,18 @@ public class PerfectSquares {
                 break;
             }
             set.add(ps);
+            map.put(ps, 1);
         }
-        System.out.println("set: " + set);
+        map.put(0, 1);
 
         return Math.min(n, getCount(set, n, n, map));
     }
 
     private int getCount(Set<Integer> set, int x, int n, Map<Integer, Integer> map) {
-        if (x == 0 || set.contains(x)) {
-            return 1;
+        if (map.containsKey(x)) {
+            return map.get(x);
         } else if (x < 0) {
             return n;
-        } else if (map.containsKey(x)) {
-            return map.get(x);
         }
 
         Iterator<Integer> it = set.iterator();
