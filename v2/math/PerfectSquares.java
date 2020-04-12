@@ -13,32 +13,31 @@ public class PerfectSquares {
         }
 
         Map<Integer, Integer> map = new HashMap<>();
-        Set<Integer> set = new HashSet<>();
+        List<Integer> list = new ArrayList<>();
         int ps = 0;
         for (int i = 1; i < Integer.MAX_VALUE; i += 2) {
             ps += i;
             if (ps > n) {
                 break;
             }
-            set.add(ps);
             map.put(ps, 1);
+            list.add(ps);
         }
         map.put(0, 1);
 
-        return Math.min(n, getCount(set, n, n, map));
+        return Math.min(n, getCount(list, n, n, map));
     }
 
-    private int getCount(Set<Integer> set, int x, int n, Map<Integer, Integer> map) {
+    private int getCount(List<Integer> list, int x, int n, Map<Integer, Integer> map) {
         if (map.containsKey(x)) {
             return map.get(x);
         } else if (x < 0) {
             return n;
         }
 
-        Iterator<Integer> it = set.iterator();
         int min = Integer.MAX_VALUE;
-        while (it.hasNext()) {
-            min = Math.min(min, 1 + getCount(set, x - it.next(), n, map));
+        for (int i = 0; i < list.size(); ++i) {
+            min = Math.min(min, 1 + getCount(list, x - list.get(i), n, map));
         }
         map.put(x, min);
 
