@@ -3,6 +3,11 @@
  * https://leetcode.com/problems/angle-between-hands-of-a-clock/
  */
 
+/*
+ * time: O(1)
+ * space: O(1)
+ */
+
 import java.util.*;
 
 public class AngleBetweenHandsOfAClock {
