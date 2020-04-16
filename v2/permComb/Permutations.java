@@ -7,6 +7,11 @@
  * http://www.programcreek.com/2013/02/leetcode-permutations-java/
  */
 
+/*
+ * time: O(n!)
+ * space: O(n)
+ */
+
 import java.util.*;
 
 public class Permutations {
