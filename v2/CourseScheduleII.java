@@ -1,3 +1,4 @@
+/* https://leetcode.com/problems/course-schedule-ii/ */
 class CourseScheduleII {
     private Map<Integer, Node> nodes;
     private Map<Node, Integer> colors;
